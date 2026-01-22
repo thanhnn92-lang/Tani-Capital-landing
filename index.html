@@ -1,167 +1,852 @@
- data-i18n="problem2_title">Thua Lỗ Liên Tục</h3><p class="problem-desc" data-i18n="problem2_desc">Tự trade nhưng cảm xúc chi phối quyết định</p></div>
-                <div class="problem-card"><div class="problem-icon">🎓</div><h3 class="problem-title" data-i18n="problem3_title">Thiếu Kiến Thức</h3><p class="problem-desc" data-i18n="problem3_desc">Muốn đầu tư nhưng không biết bắt đầu từ đâu</p></div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tani Capital - Bot Trade Vàng Tự Động MT5</title>
+    <meta name="description" content="Tani Capital - Giải pháp giao dịch vàng XAU/USD tự động trên MT5. Lợi nhuận 5-9%/tháng.">
+    <link rel="icon" type="image/png" href="logo_tani.png">
+    <link rel="shortcut icon" type="image/png" href="logo_tani.png">
+    <link rel="apple-touch-icon" href="logo_tani.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2D6A4F;
+            --dark-green: #1B4332;
+            --accent-gold: #D4AF37;
+            --dark-charcoal: #333333;
+            --light-gray: #F8F9FA;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-muted: #6B7280;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Source Sans 3', sans-serif; color: var(--text-dark); line-height: 1.6; background: var(--white); }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        /* Language Selector */
+        .lang-selector { position: relative; }
+        .lang-btn { background: rgba(45,106,79,.1); border: none; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--primary-green); font-size: .9rem; }
+        .lang-btn:hover { background: rgba(45,106,79,.2); }
+        .lang-dropdown { position: absolute; top: 100%; right: 0; background: #fff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,.15); padding: .5rem; min-width: 160px; display: none; z-index: 1001; margin-top: .5rem; }
+        .lang-dropdown.active { display: block; }
+        .lang-option { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: 8px; cursor: pointer; transition: background .2s; font-size: .9rem; text-decoration: none; color: var(--text-dark); }
+        .lang-option:hover { background: var(--light-gray); }
+        .lang-option.active { background: rgba(45,106,79,.1); color: var(--primary-green); font-weight: 600; }
+
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 0; border-bottom: 1px solid rgba(45,106,79,.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: .75rem; }
+        .logo img { height: 45px; }
+        .header-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .header-link { color: var(--text-dark); text-decoration: none; font-weight: 500; transition: color .3s; }
+        .header-link:hover { color: var(--primary-green); }
+        .header-cta { background: var(--primary-green); color: var(--white); padding: .75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all .3s; }
+        .header-cta:hover { background: var(--dark-green); transform: translateY(-2px); }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E9 50%, #FFF8E1 100%); position: relative; overflow: hidden; padding-top: 80px; }
+        .hero-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(45,106,79,.1); padding: .5rem 1rem; border-radius: 50px; font-size: .875rem; font-weight: 600; color: var(--primary-green); margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.15; color: var(--dark-charcoal); margin-bottom: 1.5rem; }
+        .hero h1 span { color: var(--primary-green); }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
+        .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; padding: 1.5rem 0; border-top: 1px solid rgba(45,106,79,.1); border-bottom: 1px solid rgba(45,106,79,.1); }
+        .stat-item { text-align: left; }
+        .stat-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--primary-green); line-height: 1; }
+        .stat-number span { color: var(--accent-gold); }
+        .stat-label { font-size: .875rem; color: var(--text-muted); margin-top: .25rem; }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all .3s; box-shadow: 0 4px 15px rgba(45,106,79,.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(45,106,79,.4); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--primary-green); padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid var(--primary-green); transition: all .3s; }
+        .btn-secondary:hover { background: var(--primary-green); color: var(--white); }
+        .btn-youtube { background: #FF0000; color: #fff; padding: .75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: .5rem; transition: all .3s; }
+        .btn-youtube:hover { background: #CC0000; transform: translateY(-2px); }
+
+        /* Hero Visual */
+        .hero-visual { position: relative; }
+        .hero-card { background: var(--white); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,.1); }
+        .trading-chart { background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .chart-pair { display: flex; align-items: center; gap: .5rem; color: var(--white); font-weight: 600; }
+        .gold-icon { width: 24px; height: 24px; background: var(--accent-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; }
+        .chart-profit { color: #4ADE80; font-weight: 700; font-size: 1.25rem; }
+        .chart-visual { height: 120px; display: flex; align-items: flex-end; gap: 4px; padding-top: 1rem; }
+        .chart-bar { flex: 1; background: linear-gradient(180deg, var(--accent-gold) 0%, var(--primary-green) 100%); border-radius: 4px 4px 0 0; }
+        .trade-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .trade-item { background: var(--light-gray); padding: 1rem; border-radius: 10px; }
+        .trade-label { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+        .trade-value { font-size: 1.25rem; font-weight: 700; color: var(--dark-charcoal); }
+        .trade-value.profit { color: #10B981; }
+
+        /* Sections */
+        .section-container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-label { display: inline-block; background: rgba(45,106,79,.1); color: var(--primary-green); padding: .5rem 1rem; border-radius: 50px; font-size: .875rem; font-weight: 600; margin-bottom: 1rem; }
+        .section-title { font-size: 2.75rem; color: var(--dark-charcoal); margin-bottom: 1rem; }
+        .section-subtitle { font-size: 1.125rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+        /* Problems */
+        .problems { padding: 6rem 2rem; background: var(--white); }
+        .problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .problem-card { background: var(--light-gray); border-radius: 16px; padding: 2rem; text-align: center; transition: all .3s; border: 2px solid transparent; }
+        .problem-card:hover { border-color: var(--primary-green); transform: translateY(-5px); }
+        .problem-icon { width: 64px; height: 64px; background: rgba(220,38,38,.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.75rem; }
+        .problem-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark-charcoal); margin-bottom: .75rem; }
+        .problem-desc { color: var(--text-muted); font-size: .95rem; }
+
+        /* Solution */
+        .solution { padding: 6rem 2rem; background: linear-gradient(180deg, var(--dark-green) 0%, #0D2818 100%); color: var(--white); }
+        .solution .section-label { background: rgba(212,175,55,.2); color: var(--accent-gold); }
+        .solution .section-title { color: var(--white); }
+        .solution .section-subtitle { color: rgba(255,255,255,.7); }
+        .solution-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+        .solution-features { display: flex; flex-direction: column; gap: 1.5rem; }
+        .feature-item { display: flex; gap: 1rem; align-items: flex-start; background: rgba(255,255,255,.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); transition: all .3s; }
+        .feature-item:hover { background: rgba(255,255,255,.1); border-color: var(--accent-gold); }
+        .feature-icon { width: 48px; height: 48px; min-width: 48px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .feature-content h4 { font-family: 'Playfair Display', serif; font-size: 1.125rem; margin-bottom: .5rem; }
+        .feature-content p { color: rgba(255,255,255,.7); font-size: .95rem; }
+        .tech-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .tech-item { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all .3s; }
+        .tech-item:hover { background: rgba(255,255,255,.1); transform: scale(1.05); }
+        .tech-icon { font-size: 2rem; margin-bottom: .75rem; }
+        .tech-name { font-weight: 600; margin-bottom: .25rem; }
+        .tech-desc { font-size: .8rem; color: rgba(255,255,255,.6); }
+
+        /* Results */
+        .results { padding: 6rem 2rem; background: linear-gradient(135deg, #FFF8E1 0%, #F8F9FA 50%, #E8F5E9 100%); }
+        .results .section-label { background: rgba(212,175,55,.2); color: #B8860B; }
+        .results-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .summary-card { background: var(--white); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,.08); border: 2px solid transparent; transition: all .3s; }
+        .summary-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
+        .summary-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; }
+        .summary-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--primary-green); margin-bottom: .25rem; }
+        .summary-label { font-size: .875rem; color: var(--text-muted); }
+        .results-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        .video-container { background: var(--white); border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,.1); }
+        .video-header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-gray); }
+        .video-icon { width: 40px; height: 40px; background: #FF0000; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; }
+        .video-title { font-family: 'Playfair Display', serif; font-size: 1.125rem; color: var(--dark-charcoal); }
+        .video-wrapper { position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; border-radius: 12px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
+        .youtube-channel { margin-top: 1rem; text-align: center; }
+        .gallery-container { display: flex; flex-direction: column; gap: 1.5rem; }
+        .gallery-header { display: flex; align-items: center; gap: .75rem; }
+        .gallery-icon { width: 40px; height: 40px; background: var(--primary-green); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; }
+        .gallery-title { font-family: 'Playfair Display', serif; font-size: 1.125rem; color: var(--dark-charcoal); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .gallery-item { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.08); transition: all .3s; cursor: pointer; }
+        .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,.15); }
+        .gallery-item img { width: 100%; height: auto; display: block; }
+        .gallery-item-info { padding: 1rem; background: var(--white); }
+        .gallery-item-title { font-weight: 600; color: var(--dark-charcoal); font-size: .9rem; margin-bottom: .25rem; }
+        .gallery-item-profit { color: #10B981; font-weight: 700; font-size: 1.1rem; }
+        .results-note { margin-top: 2rem; padding: 1.25rem 1.5rem; background: rgba(45,106,79,.1); border-radius: 12px; border-left: 4px solid var(--primary-green); }
+        .results-note p { color: var(--dark-charcoal); font-size: .95rem; }
+
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.9); z-index: 2000; justify-content: center; align-items: center; padding: 2rem; }
+        .lightbox.active { display: flex; }
+        .lightbox-content { max-width: 90%; max-height: 90%; position: relative; }
+        .lightbox-content img { max-width: 100%; max-height: 85vh; border-radius: 12px; }
+        .lightbox-close { position: absolute; top: -40px; right: 0; background: var(--white); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; }
+
+        /* Packages */
+        .packages { padding: 6rem 2rem; background: var(--light-gray); }
+        .packages-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .package-card { background: var(--white); border-radius: 20px; padding: 2.5rem; position: relative; border: 2px solid transparent; transition: all .3s; }
+        .package-card:hover { border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(45,106,79,.15); }
+        .package-card.featured { border-color: var(--accent-gold); }
+        .package-badge { position: absolute; top: -12px; right: 24px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); color: var(--white); padding: .5rem 1rem; border-radius: 50px; font-size: .75rem; font-weight: 700; text-transform: uppercase; }
+        .package-header { text-align: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--light-gray); margin-bottom: 1.5rem; }
+        .package-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark-charcoal); margin-bottom: .5rem; }
+        .package-profit { font-size: 2.5rem; font-weight: 700; color: var(--primary-green); }
+        .package-profit span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .package-desc { color: var(--text-muted); font-size: .95rem; margin-top: .5rem; }
+        .package-features { list-style: none; margin-bottom: 2rem; }
+        .package-features li { display: flex; align-items: center; gap: .75rem; padding: .75rem 0; border-bottom: 1px solid var(--light-gray); }
+        .package-features li:last-child { border-bottom: none; }
+        .check-icon { width: 20px; height: 20px; background: rgba(45,106,79,.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-green); font-size: .75rem; }
+        .package-cta { display: block; width: 100%; text-align: center; padding: 1rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all .3s; }
+        .package-card:not(.featured) .package-cta { background: var(--light-gray); color: var(--primary-green); }
+        .package-card:not(.featured) .package-cta:hover { background: var(--primary-green); color: var(--white); }
+        .package-card.featured .package-cta { background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); }
+        .fee-note { text-align: center; margin-top: 2rem; padding: 1rem 1.5rem; background: rgba(45,106,79,.05); border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Process */
+        .process { padding: 6rem 2rem; background: var(--white); }
+        .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; }
+        .process-step { text-align: center; }
+        .step-number { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--white); }
+        .step-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark-charcoal); margin-bottom: .5rem; }
+        .step-desc { color: var(--text-muted); font-size: .95rem; }
+
+        /* Testimonials */
+        .testimonials { padding: 6rem 2rem; background: var(--light-gray); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+        .testimonial-card { background: var(--white); border-radius: 16px; padding: 2rem; position: relative; }
+        .testimonial-quote { font-size: 3rem; color: var(--primary-green); opacity: .2; position: absolute; top: 1rem; left: 1.5rem; }
+        .testimonial-text { position: relative; z-index: 1; color: var(--text-dark); margin-bottom: 1.5rem; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .author-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-gold) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; }
+        .author-name { font-weight: 600; color: var(--dark-charcoal); }
+        .author-profit { font-size: .875rem; color: #10B981; font-weight: 600; }
+
+        /* CTA Section */
+        .cta-section { padding: 6rem 2rem; background: linear-gradient(135deg, var(--dark-green) 0%, #0D2818 100%); color: var(--white); }
+        .cta-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .cta-title { font-size: 2.75rem; margin-bottom: 1rem; }
+        .cta-subtitle { font-size: 1.125rem; color: rgba(255,255,255,.8); margin-bottom: 2.5rem; }
+        .cta-form { background: var(--white); border-radius: 16px; padding: 2.5rem; text-align: left; }
+        .form-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark-charcoal); text-align: center; margin-bottom: 1.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { display: block; font-weight: 600; color: var(--dark-charcoal); margin-bottom: .5rem; font-size: .95rem; }
+        .form-input, .form-select { width: 100%; padding: .875rem 1rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1rem; font-family: inherit; transition: all .3s; }
+        .form-input:focus { outline: none; border-color: var(--primary-green); }
+        .form-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all .3s; margin-top: .5rem; }
+        .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45,106,79,.3); }
+        .form-note { text-align: center; color: var(--text-muted); font-size: .875rem; margin-top: 1rem; }
+        .trial-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(45,106,79,.1); color: var(--primary-green); padding: .75rem 1.25rem; border-radius: 50px; font-weight: 600; margin-top: 1.5rem; }
+        .dbg-link { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); color: var(--white); padding: .75rem 1.25rem; border-radius: 50px; font-weight: 600; margin-top: 1rem; text-decoration: none; transition: all .3s; }
+        .dbg-link:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212,175,55,.4); }
+
+        /* Disclaimer */
+        .disclaimer { padding: 3rem 2rem; background: #FEF3C7; border-top: 3px solid var(--accent-gold); }
+        .disclaimer-container { max-width: 900px; margin: 0 auto; }
+        .disclaimer-title { display: flex; align-items: center; gap: .75rem; font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #92400E; margin-bottom: 1rem; }
+        .disclaimer-text { color: #78350F; font-size: .95rem; line-height: 1.8; }
+        .disclaimer-text p { margin-bottom: .75rem; }
+        .disclaimer-text ul { margin-left: 1.5rem; margin-bottom: .75rem; }
+        .disclaimer-text li { margin-bottom: .5rem; }
+
+        /* Footer */
+        .footer { background: var(--dark-charcoal); color: var(--white); padding: 3rem 2rem; }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+        .footer-logo { display: flex; align-items: center; gap: .75rem; }
+        .footer-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .footer-links { display: flex; gap: 3rem; }
+        .footer-column h4 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1rem; }
+        .footer-column a { display: block; color: rgba(255,255,255,.7); text-decoration: none; margin-bottom: .5rem; transition: color .3s; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-contact { display: flex; flex-direction: column; gap: .75rem; }
+        .contact-item { display: flex; align-items: center; gap: .5rem; color: rgba(255,255,255,.8); text-decoration: none; transition: color .3s; }
+        .contact-item:hover { color: var(--accent-gold); }
+        .footer-copyright { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.6); font-size: .875rem; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container, .solution-content, .results-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.75rem; }
+            .hero-stats { justify-content: center; }
+            .hero-cta { justify-content: center; }
+            .problems-grid, .testimonials-grid { grid-template-columns: 1fr; }
+            .results-summary { grid-template-columns: repeat(2, 1fr); }
+            .packages-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .form-grid { grid-template-columns: 1fr; }
+            .footer-main { flex-direction: column; align-items: center; text-align: center; }
+            .footer-links { flex-direction: column; gap: 2rem; }
+            .header-nav { display: none; }
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .section-title, .cta-title { font-size: 2rem; }
+            .process-steps, .results-summary { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .header-cta { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="logo_tani.png" alt="Tani Capital Logo">
+            </div>
+            <nav class="header-nav">
+                <a href="#results" class="header-link">Kết Quả</a>
+                <a href="#packages" class="header-link">Gói Đầu Tư</a>
+                <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="header-link">📺 YouTube</a>
+                <div class="lang-selector">
+                    <button class="lang-btn" onclick="toggleLangDropdown()">
+                        <span>🇻🇳</span>
+                        <span>VI</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a href="index.html" class="lang-option active">🇻🇳 Tiếng Việt</a>
+                        <a href="en.html" class="lang-option">🇬🇧 English</a>
+                        <a href="ru.html" class="lang-option">🇷🇺 Русский</a>
+                        <a href="hi.html" class="lang-option">🇮🇳 हिन्दी</a>
+                        <a href="tr.html" class="lang-option">🇹🇷 Türkçe</a>
+                        <a href="bn.html" class="lang-option">🇧🇩 বাংলা</a>
+                        <a href="pt.html" class="lang-option">🇧🇷 Português</a>
+                    </div>
+                </div>
+            </nav>
+            <a href="#register" class="header-cta">Đăng Ký Tư Vấn</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>Bot hoạt động 24/5 • Hơn 2 năm kiểm chứng</span>
+                </div>
+                <h1>Đầu Tư Vàng Thông Minh Với <span>Bot Trade Tự Động</span></h1>
+                <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên nền tảng MT5. Không cần kinh nghiệm, không cần theo dõi - Bot làm việc cho bạn 24/5.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">6-8<span>%</span></div>
+                        <div class="stat-label">Lợi nhuận TB/tháng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2<span>+</span></div>
+                        <div class="stat-label">Năm hoạt động</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24<span>/5</span></div>
+                        <div class="stat-label">Hỗ trợ trực tiếp</div>
+                    </div>
+                </div>
+                <div class="hero-cta">
+                    <a href="#register" class="btn-primary">Nhận Tư Vấn Miễn Phí →</a>
+                    <a href="#results" class="btn-secondary">Xem Kết Quả Thực Tế</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="trading-chart">
+                        <div class="chart-header">
+                            <div class="chart-pair">
+                                <div class="gold-icon">Au</div>
+                                XAU/USD
+                            </div>
+                            <div class="chart-profit">+7.2%</div>
+                        </div>
+                        <div class="chart-visual">
+                            <div class="chart-bar" style="height: 40%"></div>
+                            <div class="chart-bar" style="height: 55%"></div>
+                            <div class="chart-bar" style="height: 45%"></div>
+                            <div class="chart-bar" style="height: 70%"></div>
+                            <div class="chart-bar" style="height: 60%"></div>
+                            <div class="chart-bar" style="height: 85%"></div>
+                            <div class="chart-bar" style="height: 75%"></div>
+                            <div class="chart-bar" style="height: 90%"></div>
+                            <div class="chart-bar" style="height: 80%"></div>
+                            <div class="chart-bar" style="height: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="trade-info">
+                        <div class="trade-item">
+                            <div class="trade-label">Tổng vốn</div>
+                            <div class="trade-value">$10,000</div>
+                        </div>
+                        <div class="trade-item">
+                            <div class="trade-label">Lợi nhuận tháng</div>
+                            <div class="trade-value profit">+$720</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Problems Section -->
+    <section class="problems">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">Thách Thức</span>
+                <h2 class="section-title">Bạn Đang Gặp Phải Vấn Đề Này?</h2>
+                <p class="section-subtitle">Hầu hết nhà đầu tư đều đối mặt với những khó khăn khi tự giao dịch</p>
+            </div>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <h3 class="problem-title">Không Có Thời Gian</h3>
+                    <p class="problem-desc">Công việc bận rộn, không thể theo dõi biểu đồ 24/7. Bỏ lỡ nhiều cơ hội giao dịch tốt.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">📉</div>
+                    <h3 class="problem-title">Thua Lỗ Liên Tục</h3>
+                    <p class="problem-desc">Tự trade nhưng cảm xúc chi phối quyết định. FOMO, tham lam, sợ hãi dẫn đến thua lỗ.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🎓</div>
+                    <h3 class="problem-title">Thiếu Kiến Thức</h3>
+                    <p class="problem-desc">Muốn đầu tư nhưng không biết bắt đầu từ đâu. Học trading mất nhiều năm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
     <section class="solution">
         <div class="section-container">
-            <div class="section-header"><span class="section-label" data-i18n="solution_label">Giải Pháp</span><h2 class="section-title" data-i18n="solution_title">Tani Capital - Bot Trade Thông Minh</h2><p class="section-subtitle" data-i18n="solution_subtitle">Công nghệ AI kết hợp nhiều phương pháp phân tích chuyên sâu</p></div>
+            <div class="section-header">
+                <span class="section-label">Giải Pháp</span>
+                <h2 class="section-title">Tani Capital - Bot Trade Thông Minh</h2>
+                <p class="section-subtitle">Công nghệ AI kết hợp nhiều phương pháp phân tích chuyên sâu</p>
+            </div>
             <div class="solution-content">
                 <div class="solution-features">
-                    <div class="feature-item"><div class="feature-icon">🤖</div><div class="feature-content"><h4 data-i18n="feature1_title">Giao Dịch Hoàn Toàn Tự Động</h4><p data-i18n="feature1_desc">Chỉ cần cài đặt một lần, bot tự động phân tích và thực hiện giao dịch</p></div></div>
-                    <div class="feature-item"><div class="feature-icon">📊</div><div class="feature-content"><h4 data-i18n="feature2_title">Chiến Lược SMC + AI</h4><p data-i18n="feature2_desc">Kết hợp Smart Money Concept với OBV, RSI và AI phân tích thanh khoản</p></div></div>
-                    <div class="feature-item"><div class="feature-icon">🛡️</div><div class="feature-content"><h4 data-i18n="feature3_title">Quản Lý Rủi Ro Chặt Chẽ</h4><p data-i18n="feature3_desc">Drawdown tối đa 20-25%, chỉ 2 lần trong hơn 2 năm</p></div></div>
-                    <div class="feature-item"><div class="feature-icon">👥</div><div class="feature-content"><h4 data-i18n="feature4_title">Hỗ Trợ 24/5</h4><p data-i18n="feature4_desc">Đội ngũ kỹ thuật luôn trực qua Telegram</p></div></div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <div class="feature-content">
+                            <h4>Giao Dịch Hoàn Toàn Tự Động</h4>
+                            <p>Chỉ cần cài đặt một lần, bot tự động phân tích và thực hiện giao dịch 24/5</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-content">
+                            <h4>Chiến Lược SMC + AI</h4>
+                            <p>Kết hợp Smart Money Concept với OBV, RSI và AI phân tích thanh khoản</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <div class="feature-content">
+                            <h4>Quản Lý Rủi Ro Chặt Chẽ</h4>
+                            <p>Drawdown tối đa 20-25%, chỉ xảy ra 2 lần trong hơn 2 năm hoạt động</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-content">
+                            <h4>Hỗ Trợ 24/5</h4>
+                            <p>Đội ngũ kỹ thuật luôn trực tiếp hỗ trợ qua Telegram</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="solution-visual">
                     <div class="tech-stack">
-                        <div class="tech-item"><div class="tech-icon">📈</div><div class="tech-name">SMC</div><div class="tech-desc">Smart Money Concept</div></div>
-                        <div class="tech-item"><div class="tech-icon">🔄</div><div class="tech-name">OBV</div><div class="tech-desc">On-Balance Volume</div></div>
-                        <div class="tech-item"><div class="tech-icon">⚡</div><div class="tech-name">RSI</div><div class="tech-desc">Relative Strength Index</div></div>
-                        <div class="tech-item"><div class="tech-icon">🧠</div><div class="tech-name">AI</div><div class="tech-desc">Liquidity Analysis</div></div>
-                        <div class="tech-item"><div class="tech-icon">⚙️</div><div class="tech-name">MT5</div><div class="tech-desc">MetaTrader 5</div></div>
-                        <div class="tech-item"><div class="tech-icon">🏅</div><div class="tech-name">Scalping</div><div class="tech-desc">Main Strategy</div></div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📈</div>
+                            <div class="tech-name">SMC</div>
+                            <div class="tech-desc">Smart Money Concept</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔄</div>
+                            <div class="tech-name">OBV</div>
+                            <div class="tech-desc">On-Balance Volume</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <div class="tech-name">RSI</div>
+                            <div class="tech-desc">Relative Strength Index</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🧠</div>
+                            <div class="tech-name">AI</div>
+                            <div class="tech-desc">Liquidity Analysis</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚙️</div>
+                            <div class="tech-name">MT5</div>
+                            <div class="tech-desc">MetaTrader 5</div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🏅</div>
+                            <div class="tech-name">Scalping</div>
+                            <div class="tech-desc">Chiến lược chính</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Results Section -->
     <section class="results" id="results">
         <div class="section-container">
-            <div class="section-header"><span class="section-label" data-i18n="results_label">📊 Kết Quả Thực Tế</span><h2 class="section-title" data-i18n="results_title">Minh Chứng Lợi Nhuận Tháng 1/2026</h2><p class="section-subtitle" data-i18n="results_subtitle">Số liệu thực tế từ các tài khoản đang chạy bot (01/01 - 22/01/2026)</p></div>
+            <div class="section-header">
+                <span class="section-label">📊 Kết Quả Thực Tế</span>
+                <h2 class="section-title">Minh Chứng Lợi Nhuận Tháng 1/2026</h2>
+                <p class="section-subtitle">Số liệu thực tế từ các tài khoản đang chạy bot (01/01 - 22/01/2026)</p>
+            </div>
             <div class="results-summary">
-                <div class="summary-card"><div class="summary-icon">💰</div><div class="summary-value">$2,140+</div><div class="summary-label" data-i18n="summary_profit">Tổng lợi nhuận</div></div>
-                <div class="summary-card"><div class="summary-icon">📈</div><div class="summary-value">4</div><div class="summary-label" data-i18n="summary_accounts">Tài khoản hoạt động</div></div>
-                <div class="summary-card"><div class="summary-icon">📅</div><div class="summary-value">22</div><div class="summary-label" data-i18n="summary_days">Ngày giao dịch</div></div>
-                <div class="summary-card"><div class="summary-icon">🎯</div><div class="summary-value">XAU/USD</div><div class="summary-label" data-i18n="summary_product">Sản phẩm giao dịch</div></div>
+                <div class="summary-card">
+                    <div class="summary-icon">💰</div>
+                    <div class="summary-value">$2,140+</div>
+                    <div class="summary-label">Tổng lợi nhuận</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">📈</div>
+                    <div class="summary-value">4</div>
+                    <div class="summary-label">Tài khoản hoạt động</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">📅</div>
+                    <div class="summary-value">22</div>
+                    <div class="summary-label">Ngày giao dịch</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">🎯</div>
+                    <div class="summary-value">XAU/USD</div>
+                    <div class="summary-label">Sản phẩm giao dịch</div>
+                </div>
             </div>
             <div class="results-content">
                 <div class="video-container">
-                    <div class="video-header"><div class="video-icon">▶</div><div class="video-title" data-i18n="video_title">Video Lịch Sử Giao Dịch</div></div>
-                    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nuY8CDPAcIk" title="Trading Results" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-                    <div class="youtube-channel"><a href="https://www.youtube.com/@TaniCapital" target="_blank" class="btn-youtube" data-i18n="btn_youtube">▶ Xem thêm trên YouTube</a></div>
+                    <div class="video-header">
+                        <div class="video-icon">▶</div>
+                        <div class="video-title">Video Lịch Sử Giao Dịch</div>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/nuY8CDPAcIk" title="Trading Results" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="youtube-channel">
+                        <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="btn-youtube">▶ Xem thêm trên YouTube</a>
+                    </div>
                 </div>
                 <div class="gallery-container">
-                    <div class="gallery-header"><div class="gallery-icon">📱</div><div class="gallery-title" data-i18n="gallery_title">Ảnh Chụp MT5 Statement</div></div>
-                    <div class="gallery-grid">
-                        <div class="gallery-item" onclick="openLightbox('Tk_4000.jpg')"><img src="Tk_4000.jpg" alt="$4,000 Account"><div class="gallery-item-info"><div class="gallery-item-title" data-i18n="account_4k">Tài khoản $4,000</div><div class="gallery-item-profit">+$231.42</div></div></div>
-                        <div class="gallery-item" onclick="openLightbox('Tk_5000_1_.jpg')"><img src="Tk_5000_1_.jpg" alt="$5,000 Account (1)"><div class="gallery-item-info"><div class="gallery-item-title" data-i18n="account_5k1">Tài khoản $5,000 (1)</div><div class="gallery-item-profit">+$215.71</div></div></div>
-                        <div class="gallery-item" onclick="openLightbox('Tk_5000__2_.jpg')"><img src="Tk_5000__2_.jpg" alt="$5,000 Account (2)"><div class="gallery-item-info"><div class="gallery-item-title" data-i18n="account_5k2">Tài khoản $5,000 (2)</div><div class="gallery-item-profit">+$861.55</div></div></div>
-                        <div class="gallery-item" onclick="openLightbox('Tk_5000__3_.jpg')"><img src="Tk_5000__3_.jpg" alt="$5,000 Account (3)"><div class="gallery-item-info"><div class="gallery-item-title" data-i18n="account_5k3">Tài khoản $5,000 (3)</div><div class="gallery-item-profit">+$831.43</div></div></div>
+                    <div class="gallery-header">
+                        <div class="gallery-icon">📱</div>
+                        <div class="gallery-title">Ảnh Chụp MT5 Statement</div>
                     </div>
-                    <div class="results-note"><p><strong>📌</strong> <span data-i18n="results_note">Đây là kết quả thực tế. Hiệu suất quá khứ không đảm bảo kết quả tương lai.</span></p></div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" onclick="openLightbox('Tk_4000.jpg')">
+                            <img src="Tk_4000.jpg" alt="$4,000 Account">
+                            <div class="gallery-item-info">
+                                <div class="gallery-item-title">Tài khoản $4,000</div>
+                                <div class="gallery-item-profit">+$231.42</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000_1_.jpg')">
+                            <img src="Tk_5000_1_.jpg" alt="$5,000 Account">
+                            <div class="gallery-item-info">
+                                <div class="gallery-item-title">Tài khoản $5,000 (1)</div>
+                                <div class="gallery-item-profit">+$215.71</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000__2_.jpg')">
+                            <img src="Tk_5000__2_.jpg" alt="$5,000 Account">
+                            <div class="gallery-item-info">
+                                <div class="gallery-item-title">Tài khoản $5,000 (2)</div>
+                                <div class="gallery-item-profit">+$861.55</div>
+                            </div>
+                        </div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000__3_.jpg')">
+                            <img src="Tk_5000__3_.jpg" alt="$5,000 Account">
+                            <div class="gallery-item-info">
+                                <div class="gallery-item-title">Tài khoản $5,000 (3)</div>
+                                <div class="gallery-item-profit">+$831.43</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="results-note">
+                        <p><strong>📌 Lưu ý:</strong> Đây là kết quả thực tế từ các tài khoản đang hoạt động. Hiệu suất trong quá khứ không đảm bảo kết quả trong tương lai.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <div class="lightbox" id="lightbox"><div class="lightbox-content"><button class="lightbox-close" onclick="closeLightbox()">×</button><img src="" alt="MT5" id="lightbox-img"></div></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <img src="" alt="MT5 Statement" id="lightbox-img">
+        </div>
+    </div>
+
+    <!-- Packages Section -->
     <section class="packages" id="packages">
         <div class="section-container">
-            <div class="section-header"><span class="section-label" data-i18n="packages_label">Gói Đầu Tư</span><h2 class="section-title" data-i18n="packages_title">Chọn Gói Phù Hợp Với Bạn</h2><p class="section-subtitle" data-i18n="packages_subtitle">Hai lựa chọn đầu tư phù hợp với mọi mục tiêu tài chính</p></div>
+            <div class="section-header">
+                <span class="section-label">Gói Đầu Tư</span>
+                <h2 class="section-title">Chọn Gói Phù Hợp Với Bạn</h2>
+                <p class="section-subtitle">Hai lựa chọn đầu tư phù hợp với mọi mục tiêu tài chính</p>
+            </div>
             <div class="packages-grid">
                 <div class="package-card">
-                    <div class="package-header"><h3 class="package-name" data-i18n="pkg1_name">Bot Ổn Định</h3><div class="package-profit">5-9%<span>/tháng</span></div><p class="package-desc" data-i18n="pkg1_desc">Chiến lược an toàn, bảo toàn vốn</p></div>
-                    <ul class="package-features"><li><span class="check-icon">✓</span><span data-i18n="pkg1_f1">Lợi nhuận ổn định 5-9%/tháng</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg1_f2">Ưu tiên bảo toàn vốn</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg1_f3">Phù hợp vốn lớn từ $5,000+</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg1_f4">Rủi ro thấp, drawdown nhỏ</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg1_f5">Hỗ trợ 24/5 qua Telegram</span></li></ul>
-                    <a href="#register" class="package-cta" data-i18n="pkg_cta">Đăng Ký Tư Vấn</a>
+                    <div class="package-header">
+                        <h3 class="package-name">Bot Ổn Định</h3>
+                        <div class="package-profit">5-9%<span>/tháng</span></div>
+                        <p class="package-desc">Chiến lược an toàn, bảo toàn vốn</p>
+                    </div>
+                    <ul class="package-features">
+                        <li><span class="check-icon">✓</span> Lợi nhuận ổn định 5-9%/tháng</li>
+                        <li><span class="check-icon">✓</span> Ưu tiên bảo toàn vốn</li>
+                        <li><span class="check-icon">✓</span> Phù hợp vốn lớn từ $5,000+</li>
+                        <li><span class="check-icon">✓</span> Rủi ro thấp, drawdown nhỏ</li>
+                        <li><span class="check-icon">✓</span> Hỗ trợ 24/5 qua Telegram</li>
+                    </ul>
+                    <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
                 </div>
                 <div class="package-card featured">
-                    <div class="package-badge" data-i18n="pkg_popular">Phổ biến</div>
-                    <div class="package-header"><h3 class="package-name" data-i18n="pkg2_name">Bot Tăng Trưởng</h3><div class="package-profit">30-40%<span>/tháng</span></div><p class="package-desc" data-i18n="pkg2_desc">Tối ưu lợi nhuận cao</p></div>
-                    <ul class="package-features"><li><span class="check-icon">✓</span><span data-i18n="pkg2_f1">Lợi nhuận cao 30-40%/tháng</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg2_f2">Chiến lược tối ưu lợi nhuận</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg2_f3">Phù hợp vốn $500-$1,000</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg2_f4">Chấp nhận rủi ro cao hơn</span></li><li><span class="check-icon">✓</span><span data-i18n="pkg2_f5">Hỗ trợ 24/5 qua Telegram</span></li></ul>
-                    <a href="#register" class="package-cta" data-i18n="pkg_cta">Đăng Ký Tư Vấn</a>
+                    <div class="package-badge">Phổ biến</div>
+                    <div class="package-header">
+                        <h3 class="package-name">Bot Tăng Trưởng</h3>
+                        <div class="package-profit">30-40%<span>/tháng</span></div>
+                        <p class="package-desc">Tối ưu lợi nhuận cao</p>
+                    </div>
+                    <ul class="package-features">
+                        <li><span class="check-icon">✓</span> Lợi nhuận cao 30-40%/tháng</li>
+                        <li><span class="check-icon">✓</span> Chiến lược tối ưu lợi nhuận</li>
+                        <li><span class="check-icon">✓</span> Phù hợp vốn $500-$1,000</li>
+                        <li><span class="check-icon">✓</span> Chấp nhận rủi ro cao hơn</li>
+                        <li><span class="check-icon">✓</span> Hỗ trợ 24/5 qua Telegram</li>
+                    </ul>
+                    <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
                 </div>
             </div>
-            <div class="fee-note"><strong>💰</strong> <span data-i18n="fee_note">Chính sách phí: Bạn chỉ trả 30% lợi nhuận khi có lãi. Không lợi nhuận = Không phí.</span></div>
+            <div class="fee-note">
+                <strong>💰 Chính sách phí:</strong> Bạn chỉ trả 30% lợi nhuận khi có lãi. Không lợi nhuận = Không phí.
+            </div>
         </div>
     </section>
+
+    <!-- Process Section -->
     <section class="process">
         <div class="section-container">
-            <div class="section-header"><span class="section-label" data-i18n="process_label">Quy Trình</span><h2 class="section-title" data-i18n="process_title">Bắt Đầu Chỉ Với 4 Bước Đơn Giản</h2><p class="section-subtitle" data-i18n="process_subtitle">Không cần kiến thức trading, đội ngũ sẽ hướng dẫn bạn từ A-Z</p></div>
+            <div class="section-header">
+                <span class="section-label">Quy Trình</span>
+                <h2 class="section-title">Bắt Đầu Chỉ Với 4 Bước Đơn Giản</h2>
+                <p class="section-subtitle">Không cần kiến thức trading, đội ngũ sẽ hướng dẫn bạn từ A-Z</p>
+            </div>
             <div class="process-steps">
-                <div class="process-step"><div class="step-number">1</div><h3 class="step-title" data-i18n="step1_title">Đăng Ký Tư Vấn</h3><p class="step-desc" data-i18n="step1_desc">Để lại thông tin, nhân viên sẽ liên hệ tư vấn</p></div>
-                <div class="process-step"><div class="step-number">2</div><h3 class="step-title" data-i18n="step2_title">Mở Tài Khoản</h3><p class="step-desc" data-i18n="step2_desc">Được hướng dẫn tạo tài khoản trên sàn DBG</p></div>
-                <div class="process-step"><div class="step-number">3</div><h3 class="step-title" data-i18n="step3_title">Cài Đặt Bot</h3><p class="step-desc" data-i18n="step3_desc">Kỹ thuật viên hỗ trợ cài bot vào MT5</p></div>
-                <div class="process-step"><div class="step-number">4</div><h3 class="step-title" data-i18n="step4_title">Nhận Lợi Nhuận</h3><p class="step-desc" data-i18n="step4_desc">Bot tự động giao dịch 24/5</p></div>
-            </div>
-        </div>
-    </section>
-    <section class="testimonials">
-        <div class="section-container">
-            <div class="section-header"><span class="section-label" data-i18n="testimonials_label">Phản Hồi</span><h2 class="section-title" data-i18n="testimonials_title">Khách Hàng Nói Gì Về Chúng Tôi</h2><p class="section-subtitle" data-i18n="testimonials_subtitle">Hàng trăm nhà đầu tư đã tin tưởng Tani Capital</p></div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text" data-i18n="test1_text">Ban đầu tôi còn hoài nghi, nhưng sau 3 tháng chạy bot ổn định, tài khoản tăng đều đặn.</p><div class="testimonial-author"><div class="author-avatar">MH</div><div><div class="author-name">Minh Hoàng</div><div class="author-profit">+24% / 3 months</div></div></div></div>
-                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text" data-i18n="test2_text">Không có thời gian học trading, Tani Capital là giải pháp hoàn hảo. Team hỗ trợ rất nhiệt tình.</p><div class="testimonial-author"><div class="author-avatar">TL</div><div><div class="author-name">Thu Lan</div><div class="author-profit">+18% / 2 months</div></div></div></div>
-                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text" data-i18n="test3_text">Đã thử nhiều bot khác nhưng không ổn định. Tani Capital chạy mượt, lợi nhuận đều.</p><div class="testimonial-author"><div class="author-avatar">VD</div><div><div class="author-name">Văn Đức</div><div class="author-profit">+32% / 5 months</div></div></div></div>
-            </div>
-        </div>
-    </section>
-    <section class="cta-section" id="register">
-        <div class="cta-container">
-            <h2 class="cta-title" data-i18n="cta_title">Sẵn Sàng Bắt Đầu Hành Trình Đầu Tư?</h2>
-            <p class="cta-subtitle" data-i18n="cta_subtitle">Đăng ký ngay để nhận tư vấn miễn phí</p>
-            <div class="cta-form">
-                <h3 class="form-title" data-i18n="form_title">Đăng Ký Nhận Tư Vấn Miễn Phí</h3>
-                <form action="#" method="POST" id="registerForm">
-                    <div class="form-grid">
-                        <div class="form-group"><label class="form-label" data-i18n="form_name">Họ và tên *</label><input type="text" class="form-input" data-i18n-placeholder="form_name_ph" placeholder="Nhập họ và tên" required></div>
-                        <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" data-i18n-placeholder="form_email_ph" placeholder="Nhập email" required></div>
-                        <div class="form-group"><label class="form-label">Telegram</label><input type="text" class="form-input" placeholder="@username"></div>
-                        <div class="form-group"><label class="form-label" data-i18n="form_exp">Kinh nghiệm trading</label><select class="form-select" id="expSelect"><option value="">-- Chọn --</option><option value="none">Chưa có kinh nghiệm</option><option value="beginner">Mới bắt đầu</option><option value="intermediate">Có kinh nghiệm</option><option value="advanced">Nhiều kinh nghiệm</option></select></div>
-                        <div class="form-group full-width"><button type="submit" class="form-submit" data-i18n="form_submit">🚀 Đăng Ký Nhận Tư Vấn Ngay</button></div>
-                    </div>
-                </form>
-                <p class="form-note" data-i18n="form_note">Thông tin của bạn được bảo mật 100%. Chúng tôi sẽ liên hệ trong vòng 24h.</p>
-                <div style="text-align:center;">
-                    <span class="trial-badge" data-i18n="trial_badge">🎁 Dùng thử: Copy bot trực tiếp trên sàn DBG</span><br>
-                    <a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank" class="dbg-link" data-i18n="dbg_link">🏦 Mở tài khoản sàn DBG ngay</a>
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Đăng Ký Tư Vấn</h3>
+                    <p class="step-desc">Để lại thông tin, nhân viên sẽ liên hệ tư vấn chi tiết</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Mở Tài Khoản</h3>
+                    <p class="step-desc">Được hướng dẫn tạo tài khoản trên sàn DBG</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Cài Đặt Bot</h3>
+                    <p class="step-desc">Kỹ thuật viên hỗ trợ cài bot vào MT5</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Nhận Lợi Nhuận</h3>
+                    <p class="step-desc">Bot tự động giao dịch 24/5, bạn chỉ việc theo dõi</p>
                 </div>
             </div>
         </div>
     </section>
-    <section class="disclaimer">
-        <div class="disclaimer-container">
-            <h3 class="disclaimer-title"><span>⚠️</span> <span data-i18n="disclaimer_title">Cảnh Báo Rủi Ro Đầu Tư</span></h3>
-            <div class="disclaimer-text">
-                <p><strong data-i18n="disclaimer_p1">Giao dịch Forex và vàng (XAU/USD) tiềm ẩn mức độ rủi ro cao.</strong></p>
-                <ul><li data-i18n="disclaimer_li1">Bạn có thể mất một phần hoặc toàn bộ vốn đầu tư.</li><li data-i18n="disclaimer_li2">Hiệu suất trong quá khứ không đảm bảo kết quả trong tương lai.</li><li data-i18n="disclaimer_li3">Bot trading là công cụ hỗ trợ, không phải giải pháp làm giàu nhanh.</li></ul>
-                <p><strong data-i18n="disclaimer_p2">Bằng việc đăng ký, bạn xác nhận đã đọc và chấp nhận các rủi ro.</strong></p>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">Phản Hồi</span>
+                <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+                <p class="section-subtitle">Hàng trăm nhà đầu tư đã tin tưởng sử dụng Tani Capital</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">Ban đầu tôi còn hoài nghi, nhưng sau 3 tháng chạy bot ổn định, tài khoản tăng đều đặn. Team support rất nhiệt tình.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MH</div>
+                        <div>
+                            <div class="author-name">Minh Hoàng</div>
+                            <div class="author-profit">+24% / 3 tháng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">Không có thời gian học trading, Tani Capital là giải pháp hoàn hảo. Đội ngũ hỗ trợ rất nhiệt tình và chuyên nghiệp.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">TL</div>
+                        <div>
+                            <div class="author-name">Thu Lan</div>
+                            <div class="author-profit">+18% / 2 tháng</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">"</div>
+                    <p class="testimonial-text">Đã thử nhiều bot khác nhưng không ổn định. Tani Capital chạy mượt, lợi nhuận đều đặn hàng tháng.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">VD</div>
+                        <div>
+                            <div class="author-name">Văn Đức</div>
+                            <div class="author-profit">+32% / 5 tháng</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="register">
+        <div class="cta-container">
+            <h2 class="cta-title">Sẵn Sàng Bắt Đầu Hành Trình Đầu Tư?</h2>
+            <p class="cta-subtitle">Đăng ký ngay để nhận tư vấn miễn phí từ đội ngũ chuyên gia</p>
+            <div class="cta-form">
+                <h3 class="form-title">Đăng Ký Nhận Tư Vấn Miễn Phí</h3>
+                <form id="registerForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Họ và tên *</label>
+                            <input type="text" class="form-input" placeholder="Nhập họ và tên" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-input" placeholder="Nhập email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telegram</label>
+                            <input type="text" class="form-input" placeholder="@username">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Kinh nghiệm trading</label>
+                            <select class="form-select">
+                                <option value="">-- Chọn mức độ --</option>
+                                <option value="none">Chưa có kinh nghiệm</option>
+                                <option value="beginner">Mới bắt đầu (dưới 1 năm)</option>
+                                <option value="intermediate">Có kinh nghiệm (1-3 năm)</option>
+                                <option value="advanced">Nhiều kinh nghiệm (3+ năm)</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <button type="submit" class="form-submit">🚀 Đăng Ký Nhận Tư Vấn Ngay</button>
+                        </div>
+                    </div>
+                </form>
+                <p class="form-note">Thông tin của bạn được bảo mật 100%. Chúng tôi sẽ liên hệ trong vòng 24h.</p>
+                <div style="text-align: center;">
+                    <span class="trial-badge">🎁 Dùng thử: Copy bot trực tiếp trên sàn DBG</span><br>
+                    <a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank" class="dbg-link">🏦 Mở tài khoản sàn DBG ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer">
+        <div class="disclaimer-container">
+            <h3 class="disclaimer-title">
+                <span>⚠️</span>
+                <span>Cảnh Báo Rủi Ro Đầu Tư</span>
+            </h3>
+            <div class="disclaimer-text">
+                <p><strong>Giao dịch Forex và các sản phẩm phái sinh như vàng (XAU/USD) tiềm ẩn mức độ rủi ro cao và có thể không phù hợp với tất cả nhà đầu tư.</strong></p>
+                <ul>
+                    <li>Bạn có thể mất một phần hoặc toàn bộ vốn đầu tư ban đầu.</li>
+                    <li>Hiệu suất trong quá khứ không đảm bảo kết quả trong tương lai.</li>
+                    <li>Bot trading là công cụ hỗ trợ, không phải giải pháp làm giàu nhanh chóng.</li>
+                </ul>
+                <p><strong>Bằng việc đăng ký sử dụng dịch vụ, bạn xác nhận đã đọc, hiểu và chấp nhận các rủi ro liên quan.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-main">
-                <div><div class="footer-logo"><img src="logo_tani.png" alt="Tani Capital"><span style="font-family:'Playfair Display',serif;font-size:1.25rem;">Tani Capital</span></div><p style="color:rgba(255,255,255,.6);margin-top:1rem;max-width:300px;" data-i18n="footer_desc">Giải pháp giao dịch vàng tự động trên MT5.</p></div>
+                <div>
+                    <div class="footer-logo">
+                        <img src="logo_tani.png" alt="Tani Capital">
+                        <span style="font-family: 'Playfair Display', serif; font-size: 1.25rem;">Tani Capital</span>
+                    </div>
+                    <p style="color: rgba(255,255,255,.6); margin-top: 1rem; max-width: 300px;">Giải pháp giao dịch vàng tự động trên nền tảng MT5. An toàn, hiệu quả, minh bạch.</p>
+                </div>
                 <div class="footer-links">
-                    <div class="footer-column"><h4 data-i18n="footer_links">Liên kết</h4><a href="#results" data-i18n="nav_results">Kết quả</a><a href="#packages" data-i18n="nav_packages">Gói đầu tư</a><a href="#register" data-i18n="nav_cta">Đăng ký tư vấn</a><a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank" data-i18n="footer_dbg">Mở tài khoản DBG</a></div>
-                    <div class="footer-column"><h4 data-i18n="footer_contact">Liên hệ</h4><div class="footer-contact"><a href="https://t.me/michaelthanh789" class="contact-item" target="_blank">📱 Telegram: @michaelthanh789</a><a href="https://www.youtube.com/@TaniCapital" class="contact-item" target="_blank">▶️ YouTube: @TaniCapital</a></div></div>
+                    <div class="footer-column">
+                        <h4>Liên kết</h4>
+                        <a href="#results">Kết quả thực tế</a>
+                        <a href="#packages">Gói đầu tư</a>
+                        <a href="#register">Đăng ký tư vấn</a>
+                        <a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank">Mở tài khoản DBG</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Liên hệ</h4>
+                        <div class="footer-contact">
+                            <a href="https://t.me/michaelthanh789" class="contact-item" target="_blank">
+                                📱 Telegram: @michaelthanh789
+                            </a>
+                            <a href="https://www.youtube.com/@TaniCapital" class="contact-item" target="_blank">
+                                ▶️ YouTube: @TaniCapital
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="footer-copyright" data-i18n="footer_copyright">© 2024 Tani Capital. Tất cả quyền được bảo lưu.</div>
+            <div class="footer-copyright">
+                © 2024 Tani Capital. Tất cả quyền được bảo lưu.
+            </div>
         </div>
     </footer>
+
     <script>
-        const translations={vi:{nav_results:"Kết Quả",nav_packages:"Gói Đầu Tư",nav_cta:"Đăng Ký Tư Vấn",hero_badge:"Bot hoạt động 24/5 • Hơn 2 năm kiểm chứng",hero_title:"Đầu Tư Vàng Thông Minh Với <span>Bot Trade Tự Động</span>",hero_subtitle:"Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên MT5.",stat_profit:"Lợi nhuận TB/tháng",stat_years:"Năm hoạt động",stat_support:"Hỗ trợ trực tiếp",btn_consult:"Nhận Tư Vấn Miễn Phí →",btn_results:"Xem Kết Quả Thực Tế",total_capital:"Tổng vốn",monthly_profit:"Lợi nhuận tháng",problems_label:"Thách Thức",problems_title:"Bạn Đang Gặp Phải Vấn Đề Này?",problems_subtitle:"Hầu hết nhà đầu tư đều đối mặt với khó khăn khi tự giao dịch",problem1_title:"Không Có Thời Gian",problem1_desc:"Công việc bận rộn, không thể theo dõi 24/7",problem2_title:"Thua Lỗ Liên Tục",problem2_desc:"Cảm xúc chi phối quyết định",problem3_title:"Thiếu Kiến Thức",problem3_desc:"Không biết bắt đầu từ đâu",solution_label:"Giải Pháp",solution_title:"Tani Capital - Bot Trade Thông Minh",solution_subtitle:"Công nghệ AI kết hợp phân tích chuyên sâu",feature1_title:"Giao Dịch Tự Động",feature1_desc:"Bot tự động phân tích và thực hiện giao dịch",feature2_title:"Chiến Lược SMC + AI",feature2_desc:"Smart Money Concept với OBV, RSI và AI",feature3_title:"Quản Lý Rủi Ro",feature3_desc:"Drawdown tối đa 20-25%",feature4_title:"Hỗ Trợ 24/5",feature4_desc:"Đội ngũ kỹ thuật luôn trực qua Telegram",results_label:"📊 Kết Quả Thực Tế",results_title:"Minh Chứng Lợi Nhuận Tháng 1/2026",results_subtitle:"Số liệu thực tế từ các tài khoản (01/01 - 22/01/2026)",summary_profit:"Tổng lợi nhuận",summary_accounts:"Tài khoản hoạt động",summary_days:"Ngày giao dịch",summary_product:"Sản phẩm giao dịch",video_title:"Video Lịch Sử Giao Dịch",btn_youtube:"▶ Xem thêm trên YouTube",gallery_title:"Ảnh Chụp MT5 Statement",account_4k:"Tài khoản $4,000",account_5k1:"Tài khoản $5,000 (1)",account_5k2:"Tài khoản $5,000 (2)",account_5k3:"Tài khoản $5,000 (3)",results_note:"Đây là kết quả thực tế. Hiệu suất quá khứ không đảm bảo tương lai.",packages_label:"Gói Đầu Tư",packages_title:"Chọn Gói Phù Hợp Với Bạn",packages_subtitle:"Hai lựa chọn cho mọi mục tiêu tài chính",pkg1_name:"Bot Ổn Định",pkg1_desc:"Chiến lược an toàn, bảo toàn vốn",pkg1_f1:"Lợi nhuận ổn định 5-9%/tháng",pkg1_f2:"Ưu tiên bảo toàn vốn",pkg1_f3:"Phù hợp vốn từ $5,000+",pkg1_f4:"Rủi ro thấp, drawdown nhỏ",pkg1_f5:"Hỗ trợ 24/5 qua Telegram",pkg2_name:"Bot Tăng Trưởng",pkg2_desc:"Tối ưu lợi nhuận cao",pkg_popular:"Phổ biến",pkg2_f1:"Lợi nhuận cao 30-40%/tháng",pkg2_f2:"Chiến lược tối ưu lợi nhuận",pkg2_f3:"Phù hợp vốn $500-$1,000",pkg2_f4:"Chấp nhận rủi ro cao hơn",pkg2_f5:"Hỗ trợ 24/5 qua Telegram",pkg_cta:"Đăng Ký Tư Vấn",fee_note:"Chính sách phí: Bạn chỉ trả 30% lợi nhuận khi có lãi. Không lợi nhuận = Không phí.",process_label:"Quy Trình",process_title:"Bắt Đầu Chỉ Với 4 Bước",process_subtitle:"Đội ngũ sẽ hướng dẫn bạn từ A-Z",step1_title:"Đăng Ký Tư Vấn",step1_desc:"Để lại thông tin",step2_title:"Mở Tài Khoản",step2_desc:"Tạo tài khoản trên DBG",step3_title:"Cài Đặt Bot",step3_desc:"Cài bot vào MT5",step4_title:"Nhận Lợi Nhuận",step4_desc:"Bot tự động giao dịch",testimonials_label:"Phản Hồi",testimonials_title:"Khách Hàng Nói Gì",testimonials_subtitle:"Hàng trăm nhà đầu tư đã tin tưởng",test1_text:"Sau 3 tháng, tài khoản tăng đều đặn.",test2_text:"Tani Capital là giải pháp hoàn hảo.",test3_text:"Bot chạy mượt, lợi nhuận đều.",cta_title:"Sẵn Sàng Bắt Đầu Đầu Tư?",cta_subtitle:"Đăng ký ngay để nhận tư vấn miễn phí",form_title:"Đăng Ký Nhận Tư Vấn Miễn Phí",form_name:"Họ và tên *",form_name_ph:"Nhập họ và tên",form_email_ph:"Nhập email",form_exp:"Kinh nghiệm trading",form_submit:"🚀 Đăng Ký Ngay",form_note:"Thông tin bảo mật 100%. Liên hệ trong 24h.",trial_badge:"🎁 Copy bot trực tiếp trên sàn DBG",dbg_link:"🏦 Mở tài khoản DBG ngay",disclaimer_title:"Cảnh Báo Rủi Ro",disclaimer_p1:"Giao dịch Forex và vàng tiềm ẩn rủi ro cao.",disclaimer_li1:"Có thể mất vốn đầu tư.",disclaimer_li2:"Hiệu suất quá khứ không đảm bảo tương lai.",disclaimer_li3:"Bot là công cụ hỗ trợ.",disclaimer_p2:"Đăng ký = Chấp nhận rủi ro.",footer_desc:"Giải pháp giao dịch vàng tự động trên MT5.",footer_links:"Liên kết",footer_contact:"Liên hệ",footer_dbg:"Mở tài khoản DBG",footer_copyright:"© 2024 Tani Capital. All rights reserved."},
-        en:{nav_results:"Results",nav_packages:"Packages",nav_cta:"Get Consultation",hero_badge:"Bot operates 24/5 • 2+ years proven",hero_title:"Smart Gold Investment With <span>Automated Trading Bot</span>",hero_subtitle:"Tani Capital provides fully automated gold (XAU/USD) trading on MT5.",stat_profit:"Avg. monthly profit",stat_years:"Years of operation",stat_support:"Direct support",btn_consult:"Get Free Consultation →",btn_results:"View Real Results",total_capital:"Total capital",monthly_profit:"Monthly profit",problems_label:"Challenges",problems_title:"Are You Facing These Problems?",problems_subtitle:"Most investors face difficulties when trading alone",problem1_title:"No Time",problem1_desc:"Busy work, can't monitor 24/7",problem2_title:"Continuous Losses",problem2_desc:"Emotions affect decisions",problem3_title:"Lack of Knowledge",problem3_desc:"Don't know where to start",solution_label:"Solution",solution_title:"Tani Capital - Smart Trading Bot",solution_subtitle:"AI technology with advanced analysis",feature1_title:"Fully Automated Trading",feature1_desc:"Bot automatically analyzes and executes trades",feature2_title:"SMC + AI Strategy",feature2_desc:"Smart Money Concept with OBV, RSI and AI",feature3_title:"Risk Management",feature3_desc:"Maximum drawdown 20-25%",feature4_title:"24/5 Support",feature4_desc:"Technical team available via Telegram",results_label:"📊 Real Results",results_title:"Profit Proof January 2026",results_subtitle:"Real data from accounts (01/01 - 22/01/2026)",summary_profit:"Total profit",summary_accounts:"Active accounts",summary_days:"Trading days",summary_product:"Trading product",video_title:"Trading History Video",btn_youtube:"▶ Watch on YouTube",gallery_title:"MT5 Statement Screenshots",account_4k:"$4,000 Account",account_5k1:"$5,000 Account (1)",account_5k2:"$5,000 Account (2)",account_5k3:"$5,000 Account (3)",results_note:"These are real results. Past performance doesn't guarantee future.",packages_label:"Packages",packages_title:"Choose Your Package",packages_subtitle:"Two options for all financial goals",pkg1_name:"Stable Bot",pkg1_desc:"Safe strategy, capital preservation",pkg1_f1:"Stable profit 5-9%/month",pkg1_f2:"Capital preservation priority",pkg1_f3:"Suitable for $5,000+",pkg1_f4:"Low risk, small drawdown",pkg1_f5:"24/5 support via Telegram",pkg2_name:"Growth Bot",pkg2_desc:"Optimized high profits",pkg_popular:"Popular",pkg2_f1:"High profit 30-40%/month",pkg2_f2:"Profit optimization strategy",pkg2_f3:"Suitable for $500-$1,000",pkg2_f4:"Accept higher risk",pkg2_f5:"24/5 support via Telegram",pkg_cta:"Get Consultation",fee_note:"Fee policy: You only pay 30% of profits. No profit = No fee.",process_label:"Process",process_title:"Start With 4 Simple Steps",process_subtitle:"Our team will guide you from A-Z",step1_title:"Register",step1_desc:"Leave your info",step2_title:"Open Account",step2_desc:"Create account on DBG",step3_title:"Install Bot",step3_desc:"Install bot on MT5",step4_title:"Receive Profits",step4_desc:"Bot trades automatically",testimonials_label:"Feedback",testimonials_title:"What Our Clients Say",testimonials_subtitle:"Hundreds of investors trust us",test1_text:"After 3 months, my account grew steadily.",test2_text:"Tani Capital is the perfect solution.",test3_text:"Bot runs smoothly with consistent profits.",cta_title:"Ready to Start Investing?",cta_subtitle:"Register now for free consultation",form_title:"Register for Free Consultation",form_name:"Full name *",form_name_ph:"Enter your name",form_email_ph:"Enter email",form_exp:"Trading experience",form_submit:"🚀 Register Now",form_note:"100% confidential. Contact within 24h.",trial_badge:"🎁 Copy bot directly on DBG exchange",dbg_link:"🏦 Open DBG account now",disclaimer_title:"Risk Warning",disclaimer_p1:"Forex and gold trading involves high risk.",disclaimer_li1:"You may lose your investment.",disclaimer_li2:"Past performance doesn't guarantee future.",disclaimer_li3:"Bot is a tool, not a get-rich-quick scheme.",disclaimer_p2:"Registration = Accept risks.",footer_desc:"Automated gold trading solution on MT5.",footer_links:"Links",footer_contact:"Contact",footer_dbg:"Open DBG account",footer_copyright:"© 2024 Tani Capital. All rights reserved."},
-        ru:{nav_results:"Результаты",nav_packages:"Пакеты",nav_cta:"Консультация",hero_badge:"Бот работает 24/5 • 2+ лет",hero_title:"Умные Инвестиции в Золото с <span>Автоботом</span>",hero_subtitle:"Tani Capital - автоматическая торговля золотом на MT5.",stat_profit:"Средняя прибыль/мес",stat_years:"Лет работы",stat_support:"Поддержка",btn_consult:"Бесплатная Консультация →",btn_results:"Смотреть Результаты",total_capital:"Капитал",monthly_profit:"Прибыль/мес",problems_label:"Проблемы",problems_title:"Вы сталкиваетесь с этим?",problems_subtitle:"Большинство инвесторов испытывают трудности",problem1_title:"Нет Времени",problem1_desc:"Нет возможности следить 24/7",problem2_title:"Убытки",problem2_desc:"Эмоции влияют на решения",problem3_title:"Нет Знаний",problem3_desc:"Не знаете с чего начать",solution_label:"Решение",solution_title:"Tani Capital - Умный Бот",solution_subtitle:"Технология AI с продвинутым анализом",feature1_title:"Автоторговля",feature1_desc:"Бот автоматически торгует",feature2_title:"Стратегия SMC + AI",feature2_desc:"Smart Money + OBV, RSI и AI",feature3_title:"Управление Риском",feature3_desc:"Просадка макс 20-25%",feature4_title:"Поддержка 24/5",feature4_desc:"Команда в Telegram",results_label:"📊 Результаты",results_title:"Прибыль Январь 2026",results_subtitle:"Реальные данные",summary_profit:"Общая прибыль",summary_accounts:"Активных счетов",summary_days:"Торговых дней",summary_product:"Продукт",video_title:"Видео",btn_youtube:"▶ YouTube",gallery_title:"Скриншоты MT5",account_4k:"Счёт $4,000",account_5k1:"Счёт $5,000 (1)",account_5k2:"Счёт $5,000 (2)",account_5k3:"Счёт $5,000 (3)",results_note:"Реальные результаты. Прошлое не гарантирует будущее.",packages_label:"Пакеты",packages_title:"Выберите Пакет",packages_subtitle:"Два варианта",pkg1_name:"Стабильный Бот",pkg1_desc:"Безопасная стратегия",pkg1_f1:"Прибыль 5-9%/мес",pkg1_f2:"Сохранение капитала",pkg1_f3:"Для $5,000+",pkg1_f4:"Низкий риск",pkg1_f5:"Поддержка 24/5",pkg2_name:"Бот Роста",pkg2_desc:"Высокая прибыль",pkg_popular:"Популярный",pkg2_f1:"Прибыль 30-40%/мес",pkg2_f2:"Оптимизация прибыли",pkg2_f3:"Для $500-$1,000",pkg2_f4:"Выше риск",pkg2_f5:"Поддержка 24/5",pkg_cta:"Консультация",fee_note:"Комиссия: 30% от прибыли. Нет прибыли = Нет комиссии.",process_label:"Процесс",process_title:"4 Простых Шага",process_subtitle:"Мы проведём вас от А до Я",step1_title:"Регистрация",step1_desc:"Оставьте данные",step2_title:"Открытие Счёта",step2_desc:"Создайте счёт на DBG",step3_title:"Установка Бота",step3_desc:"Установите бота на MT5",step4_title:"Прибыль",step4_desc:"Бот торгует автоматически",testimonials_label:"Отзывы",testimonials_title:"Что Говорят Клиенты",testimonials_subtitle:"Сотни инвесторов доверяют нам",test1_text:"После 3 месяцев счёт стабильно вырос.",test2_text:"Tani Capital - идеальное решение.",test3_text:"Бот работает отлично.",cta_title:"Готовы Начать?",cta_subtitle:"Зарегистрируйтесь для консультации",form_title:"Бесплатная Консультация",form_name:"Полное имя *",form_name_ph:"Введите имя",form_email_ph:"Введите email",form_exp:"Опыт трейдинга",form_submit:"🚀 Зарегистрироваться",form_note:"100% конфиденциально. Ответ в 24ч.",trial_badge:"🎁 Копируйте бота на DBG",dbg_link:"🏦 Открыть счёт DBG",disclaimer_title:"Предупреждение о Рисках",disclaimer_p1:"Торговля несёт высокий риск.",disclaimer_li1:"Можете потерять капитал.",disclaimer_li2:"Прошлое не гарантирует будущее.",disclaimer_li3:"Бот - инструмент.",disclaimer_p2:"Регистрация = Принятие рисков.",footer_desc:"Автоторговля золотом на MT5.",footer_links:"Ссылки",footer_contact:"Контакты",footer_dbg:"Открыть счёт DBG",footer_copyright:"© 2024 Tani Capital."},
-        hi:{nav_results:"परिणाम",nav_packages:"पैकेज",nav_cta:"परामर्श लें",hero_badge:"बॉट 24/5 काम करता है • 2+ साल",hero_title:"<span>ऑटोमेटेड बॉट</span> के साथ गोल्ड निवेश",hero_subtitle:"Tani Capital MT5 पर स्वचालित गोल्ड ट्रेडिंग।",stat_profit:"औसत लाभ/माह",stat_years:"वर्षों",stat_support:"सहायता",btn_consult:"मुफ्त परामर्श →",btn_results:"परिणाम देखें",total_capital:"कुल पूंजी",monthly_profit:"मासिक लाभ",problems_label:"चुनौतियां",problems_title:"क्या आप इन समस्याओं का सामना कर रहे हैं?",problems_subtitle:"अधिकांश निवेशक कठिनाइयों का सामना करते हैं",problem1_title:"समय नहीं",problem1_desc:"24/7 देख नहीं सकते",problem2_title:"नुकसान",problem2_desc:"भावनाएं प्रभावित करती हैं",problem3_title:"ज्ञान नहीं",problem3_desc:"कहाँ से शुरू करें",solution_label:"समाधान",solution_title:"Tani Capital - स्मार्ट बॉट",solution_subtitle:"AI तकनीक",feature1_title:"स्वचालित ट्रेडिंग",feature1_desc:"बॉट स्वचालित रूप से ट्रेड करता है",feature2_title:"SMC + AI",feature2_desc:"Smart Money + OBV, RSI और AI",feature3_title:"जोखिम प्रबंधन",feature3_desc:"अधिकतम ड्रॉडाउन 20-25%",feature4_title:"24/5 सहायता",feature4_desc:"टेलीग्राम पर टीम",results_label:"📊 परिणाम",results_title:"जनवरी 2026 लाभ",results_subtitle:"वास्तविक डेटा",summary_profit:"कुल लाभ",summary_accounts:"सक्रिय खाते",summary_days:"ट्रेडिंग दिन",summary_product:"उत्पाद",video_title:"वीडियो",btn_youtube:"▶ YouTube",gallery_title:"MT5 स्क्रीनशॉट",account_4k:"$4,000 खाता",account_5k1:"$5,000 खाता (1)",account_5k2:"$5,000 खाता (2)",account_5k3:"$5,000 खाता (3)",results_note:"वास्तविक परिणाम। पिछला प्रदर्शन गारंटी नहीं देता।",packages_label:"पैकेज",packages_title:"अपना पैकेज चुनें",packages_subtitle:"दो विकल्प",pkg1_name:"स्थिर बॉट",pkg1_desc:"सुरक्षित रणनीति",pkg1_f1:"लाभ 5-9%/माह",pkg1_f2:"पूंजी संरक्षण",pkg1_f3:"$5,000+ के लिए",pkg1_f4:"कम जोखिम",pkg1_f5:"24/5 सहायता",pkg2_name:"ग्रोथ बॉट",pkg2_desc:"उच्च लाभ",pkg_popular:"लोकप्रिय",pkg2_f1:"लाभ 30-40%/माह",pkg2_f2:"लाभ अनुकूलन",pkg2_f3:"$500-$1,000 के लिए",pkg2_f4:"उच्च जोखिम",pkg2_f5:"24/5 सहायता",pkg_cta:"परामर्श लें",fee_note:"शुल्क: लाभ का 30%। कोई लाभ = कोई शुल्क नहीं।",process_label:"प्रक्रिया",process_title:"4 सरल चरण",process_subtitle:"हमारी टीम मार्गदर्शन करेगी",step1_title:"पंजीकरण",step1_desc:"जानकारी दें",step2_title:"खाता खोलें",step2_desc:"DBG पर खाता बनाएं",step3_title:"बॉट इंस्टॉल करें",step3_desc:"MT5 पर बॉट इंस्टॉल करें",step4_title:"लाभ प्राप्त करें",step4_desc:"बॉट स्वचालित ट्रेड करता है",testimonials_label:"प्रतिक्रिया",testimonials_title:"ग्राहक क्या कहते हैं",testimonials_subtitle:"सैकड़ों निवेशक भरोसा करते हैं",test1_text:"3 महीने बाद खाता बढ़ा।",test2_text:"Tani Capital सही समाधान है।",test3_text:"बॉट अच्छा काम करता है।",cta_title:"शुरू करने के लिए तैयार?",cta_subtitle:"मुफ्त परामर्श के लिए पंजीकरण करें",form_title:"मुफ्त परामर्श",form_name:"पूरा नाम *",form_name_ph:"नाम दर्ज करें",form_email_ph:"ईमेल दर्ज करें",form_exp:"ट्रेडिंग अनुभव",form_submit:"🚀 पंजीकरण करें",form_note:"गोपनीय। 24 घंटे में जवाब।",trial_badge:"🎁 DBG पर बॉट कॉपी करें",dbg_link:"🏦 DBG खाता खोलें",disclaimer_title:"जोखिम चेतावनी",disclaimer_p1:"ट्रेडिंग में जोखिम है।",disclaimer_li1:"पूंजी खो सकते हैं।",disclaimer_li2:"पिछला गारंटी नहीं देता।",disclaimer_li3:"बॉट एक उपकरण है।",disclaimer_p2:"पंजीकरण = जोखिम स्वीकार।",footer_desc:"MT5 पर गोल्ड ऑटो ट्रेडिंग।",footer_links:"लिंक",footer_contact:"संपर्क",footer_dbg:"DBG खाता खोलें",footer_copyright:"© 2024 Tani Capital."},
-        tr:{nav_results:"Sonuçlar",nav_packages:"Paketler",nav_cta:"Danışmanlık",hero_badge:"Bot 24/5 çalışır • 2+ yıl",hero_title:"<span>Otomatik Bot</span> ile Akıllı Altın Yatırımı",hero_subtitle:"Tani Capital MT5'te otomatik altın ticareti.",stat_profit:"Ort. kâr/ay",stat_years:"Yıl",stat_support:"Destek",btn_consult:"Ücretsiz Danışmanlık →",btn_results:"Sonuçları Gör",total_capital:"Toplam sermaye",monthly_profit:"Aylık kâr",problems_label:"Zorluklar",problems_title:"Bu Sorunlarla Karşılaşıyor musunuz?",problems_subtitle:"Çoğu yatırımcı zorlanır",problem1_title:"Zaman Yok",problem1_desc:"24/7 izleyemezsiniz",problem2_title:"Kayıplar",problem2_desc:"Duygular etkiler",problem3_title:"Bilgi Yok",problem3_desc:"Nereden başlayacağınızı bilmiyorsunuz",solution_label:"Çözüm",solution_title:"Tani Capital - Akıllı Bot",solution_subtitle:"AI teknolojisi",feature1_title:"Otomatik Ticaret",feature1_desc:"Bot otomatik işlem yapar",feature2_title:"SMC + AI",feature2_desc:"Smart Money + OBV, RSI ve AI",feature3_title:"Risk Yönetimi",feature3_desc:"Maks düşüş %20-25",feature4_title:"24/5 Destek",feature4_desc:"Telegram'da ekip",results_label:"📊 Sonuçlar",results_title:"Ocak 2026 Kâr",results_subtitle:"Gerçek veriler",summary_profit:"Toplam kâr",summary_accounts:"Aktif hesaplar",summary_days:"İşlem günleri",summary_product:"Ürün",video_title:"Video",btn_youtube:"▶ YouTube",gallery_title:"MT5 Ekran Görüntüleri",account_4k:"$4,000 Hesap",account_5k1:"$5,000 Hesap (1)",account_5k2:"$5,000 Hesap (2)",account_5k3:"$5,000 Hesap (3)",results_note:"Gerçek sonuçlar. Geçmiş gelecek garanti etmez.",packages_label:"Paketler",packages_title:"Paket Seçin",packages_subtitle:"İki seçenek",pkg1_name:"Stabil Bot",pkg1_desc:"Güvenli strateji",pkg1_f1:"Kâr %5-9/ay",pkg1_f2:"Sermaye koruma",pkg1_f3:"$5,000+ için",pkg1_f4:"Düşük risk",pkg1_f5:"24/5 destek",pkg2_name:"Büyüme Botu",pkg2_desc:"Yüksek kâr",pkg_popular:"Popüler",pkg2_f1:"Kâr %30-40/ay",pkg2_f2:"Kâr optimizasyonu",pkg2_f3:"$500-$1,000 için",pkg2_f4:"Yüksek risk",pkg2_f5:"24/5 destek",pkg_cta:"Danışmanlık Al",fee_note:"Ücret: Kârın %30'u. Kâr yok = Ücret yok.",process_label:"Süreç",process_title:"4 Basit Adım",process_subtitle:"Ekibimiz rehberlik eder",step1_title:"Kayıt",step1_desc:"Bilgilerinizi bırakın",step2_title:"Hesap Aç",step2_desc:"DBG'de hesap oluşturun",step3_title:"Bot Kur",step3_desc:"MT5'e bot kurun",step4_title:"Kâr Al",step4_desc:"Bot otomatik işlem yapar",testimonials_label:"Yorumlar",testimonials_title:"Müşteriler Ne Diyor",testimonials_subtitle:"Yüzlerce yatırımcı güveniyor",test1_text:"3 ay sonra hesabım büyüdü.",test2_text:"Tani Capital mükemmel çözüm.",test3_text:"Bot düzgün çalışıyor.",cta_title:"Başlamaya Hazır mısınız?",cta_subtitle:"Danışmanlık için kayıt olun",form_title:"Ücretsiz Danışmanlık",form_name:"Ad Soyad *",form_name_ph:"Adınızı girin",form_email_ph:"Email girin",form_exp:"Ticaret deneyimi",form_submit:"🚀 Kayıt Ol",form_note:"Gizli. 24 saat içinde yanıt.",trial_badge:"🎁 DBG'de botu kopyalayın",dbg_link:"🏦 DBG hesabı aç",disclaimer_title:"Risk Uyarısı",disclaimer_p1:"Ticaret yüksek risk içerir.",disclaimer_li1:"Sermaye kaybedebilirsiniz.",disclaimer_li2:"Geçmiş gelecek garanti etmez.",disclaimer_li3:"Bot bir araçtır.",disclaimer_p2:"Kayıt = Risk kabul.",footer_desc:"MT5'te altın oto ticareti.",footer_links:"Bağlantılar",footer_contact:"İletişim",footer_dbg:"DBG hesabı aç",footer_copyright:"© 2024 Tani Capital."},
-        bn:{nav_results:"ফলাফল",nav_packages:"প্যাকেজ",nav_cta:"পরামর্শ নিন",hero_badge:"বট 24/5 কাজ করে • 2+ বছর",hero_title:"<span>অটোমেটেড বট</span> দিয়ে গোল্ড বিনিয়োগ",hero_subtitle:"Tani Capital MT5-এ স্বয়ংক্রিয় গোল্ড ট্রেডিং।",stat_profit:"গড় লাভ/মাস",stat_years:"বছর",stat_support:"সহায়তা",btn_consult:"বিনামূল্যে পরামর্শ →",btn_results:"ফলাফল দেখুন",total_capital:"মোট মূলধন",monthly_profit:"মাসিক লাভ",problems_label:"চ্যালেঞ্জ",problems_title:"এই সমস্যার সম্মুখীন?",problems_subtitle:"বেশিরভাগ বিনিয়োগকারী অসুবিধার সম্মুখীন হন",problem1_title:"সময় নেই",problem1_desc:"24/7 দেখা সম্ভব নয়",problem2_title:"ক্ষতি",problem2_desc:"আবেগ প্রভাবিত করে",problem3_title:"জ্ঞান নেই",problem3_desc:"কোথা থেকে শুরু করবেন",solution_label:"সমাধান",solution_title:"Tani Capital - স্মার্ট বট",solution_subtitle:"AI প্রযুক্তি",feature1_title:"স্বয়ংক্রিয় ট্রেডিং",feature1_desc:"বট স্বয়ংক্রিয়ভাবে ট্রেড করে",feature2_title:"SMC + AI",feature2_desc:"Smart Money + OBV, RSI এবং AI",feature3_title:"ঝুঁকি ব্যবস্থাপনা",feature3_desc:"সর্বোচ্চ ড্রডাউন 20-25%",feature4_title:"24/5 সহায়তা",feature4_desc:"টেলিগ্রামে দল",results_label:"📊 ফলাফল",results_title:"জানুয়ারি 2026 লাভ",results_subtitle:"প্রকৃত ডেটা",summary_profit:"মোট লাভ",summary_accounts:"সক্রিয় অ্যাকাউন্ট",summary_days:"ট্রেডিং দিন",summary_product:"পণ্য",video_title:"ভিডিও",btn_youtube:"▶ YouTube",gallery_title:"MT5 স্ক্রিনশট",account_4k:"$4,000 অ্যাকাউন্ট",account_5k1:"$5,000 অ্যাকাউন্ট (1)",account_5k2:"$5,000 অ্যাকাউন্ট (2)",account_5k3:"$5,000 অ্যাকাউন্ট (3)",results_note:"প্রকৃত ফলাফল। অতীত গ্যারান্টি দেয় না।",packages_label:"প্যাকেজ",packages_title:"প্যাকেজ বেছে নিন",packages_subtitle:"দুটি বিকল্প",pkg1_name:"স্থিতিশীল বট",pkg1_desc:"নিরাপদ কৌশল",pkg1_f1:"লাভ 5-9%/মাস",pkg1_f2:"মূলধন সংরক্ষণ",pkg1_f3:"$5,000+ এর জন্য",pkg1_f4:"কম ঝুঁকি",pkg1_f5:"24/5 সহায়তা",pkg2_name:"গ্রোথ বট",pkg2_desc:"উচ্চ লাভ",pkg_popular:"জনপ্রিয়",pkg2_f1:"লাভ 30-40%/মাস",pkg2_f2:"লাভ অপ্টিমাইজেশন",pkg2_f3:"$500-$1,000 এর জন্য",pkg2_f4:"উচ্চ ঝুঁকি",pkg2_f5:"24/5 সহায়তা",pkg_cta:"পরামর্শ নিন",fee_note:"ফি: লাভের 30%। কোনো লাভ = কোনো ফি নেই।",process_label:"প্রক্রিয়া",process_title:"4টি সহজ ধাপ",process_subtitle:"আমাদের দল গাইড করবে",step1_title:"নিবন্ধন",step1_desc:"তথ্য দিন",step2_title:"অ্যাকাউন্ট খুলুন",step2_desc:"DBG-তে অ্যাকাউন্ট তৈরি করুন",step3_title:"বট ইনস্টল করুন",step3_desc:"MT5-এ বট ইনস্টল করুন",step4_title:"লাভ পান",step4_desc:"বট স্বয়ংক্রিয় ট্রেড করে",testimonials_label:"প্রতিক্রিয়া",testimonials_title:"ক্লায়েন্টরা কী বলেন",testimonials_subtitle:"শত শত বিনিয়োগকারী বিশ্বাস করেন",test1_text:"3 মাস পরে অ্যাকাউন্ট বেড়েছে।",test2_text:"Tani Capital সঠিক সমাধান।",test3_text:"বট ভালো কাজ করে।",cta_title:"শুরু করতে প্রস্তুত?",cta_subtitle:"পরামর্শের জন্য নিবন্ধন করুন",form_title:"বিনামূল্যে পরামর্শ",form_name:"পুরো নাম *",form_name_ph:"নাম লিখুন",form_email_ph:"ইমেইল লিখুন",form_exp:"ট্রেডিং অভিজ্ঞতা",form_submit:"🚀 নিবন্ধন করুন",form_note:"গোপনীয়। 24 ঘন্টায় জবাব।",trial_badge:"🎁 DBG-তে বট কপি করুন",dbg_link:"🏦 DBG অ্যাকাউন্ট খুলুন",disclaimer_title:"ঝুঁকি সতর্কতা",disclaimer_p1:"ট্রেডিং-এ ঝুঁকি আছে।",disclaimer_li1:"মূলধন হারাতে পারেন।",disclaimer_li2:"অতীত গ্যারান্টি দেয় না।",disclaimer_li3:"বট একটি টুল।",disclaimer_p2:"নিবন্ধন = ঝুঁকি স্বীকার।",footer_desc:"MT5-এ গোল্ড অটো ট্রেডিং।",footer_links:"লিংক",footer_contact:"যোগাযোগ",footer_dbg:"DBG অ্যাকাউন্ট খুলুন",footer_copyright:"© 2024 Tani Capital."},
-        pt:{nav_results:"Resultados",nav_packages:"Pacotes",nav_cta:"Consultoria",hero_badge:"Bot opera 24/5 • 2+ anos",hero_title:"Investimento em Ouro com <span>Bot Automático</span>",hero_subtitle:"Tani Capital oferece trading de ouro automático no MT5.",stat_profit:"Lucro médio/mês",stat_years:"Anos",stat_support:"Suporte",btn_consult:"Consultoria Gratuita →",btn_results:"Ver Resultados",total_capital:"Capital total",monthly_profit:"Lucro mensal",problems_label:"Desafios",problems_title:"Enfrenta Esses Problemas?",problems_subtitle:"A maioria dos investidores enfrenta dificuldades",problem1_title:"Sem Tempo",problem1_desc:"Não pode monitorar 24/7",problem2_title:"Perdas",problem2_desc:"Emoções afetam decisões",problem3_title:"Sem Conhecimento",problem3_desc:"Não sabe por onde começar",solution_label:"Solução",solution_title:"Tani Capital - Bot Inteligente",solution_subtitle:"Tecnologia AI",feature1_title:"Trading Automático",feature1_desc:"Bot opera automaticamente",feature2_title:"SMC + AI",feature2_desc:"Smart Money + OBV, RSI e AI",feature3_title:"Gestão de Risco",feature3_desc:"Drawdown máx 20-25%",feature4_title:"Suporte 24/5",feature4_desc:"Equipe no Telegram",results_label:"📊 Resultados",results_title:"Lucro Janeiro 2026",results_subtitle:"Dados reais",summary_profit:"Lucro total",summary_accounts:"Contas ativas",summary_days:"Dias de trading",summary_product:"Produto",video_title:"Vídeo",btn_youtube:"▶ YouTube",gallery_title:"Screenshots MT5",account_4k:"Conta $4,000",account_5k1:"Conta $5,000 (1)",account_5k2:"Conta $5,000 (2)",account_5k3:"Conta $5,000 (3)",results_note:"Resultados reais. Passado não garante futuro.",packages_label:"Pacotes",packages_title:"Escolha Seu Pacote",packages_subtitle:"Duas opções",pkg1_name:"Bot Estável",pkg1_desc:"Estratégia segura",pkg1_f1:"Lucro 5-9%/mês",pkg1_f2:"Preservação de capital",pkg1_f3:"Para $5,000+",pkg1_f4:"Baixo risco",pkg1_f5:"Suporte 24/5",pkg2_name:"Bot Crescimento",pkg2_desc:"Alto lucro",pkg_popular:"Popular",pkg2_f1:"Lucro 30-40%/mês",pkg2_f2:"Otimização de lucro",pkg2_f3:"Para $500-$1,000",pkg2_f4:"Maior risco",pkg2_f5:"Suporte 24/5",pkg_cta:"Consultoria",fee_note:"Taxa: 30% do lucro. Sem lucro = Sem taxa.",process_label:"Processo",process_title:"4 Passos Simples",process_subtitle:"Nossa equipe guia você",step1_title:"Registro",step1_desc:"Deixe seus dados",step2_title:"Abrir Conta",step2_desc:"Crie conta na DBG",step3_title:"Instalar Bot",step3_desc:"Instale bot no MT5",step4_title:"Receber Lucros",step4_desc:"Bot opera automaticamente",testimonials_label:"Feedback",testimonials_title:"O Que Clientes Dizem",testimonials_subtitle:"Centenas confiam em nós",test1_text:"Após 3 meses, conta cresceu.",test2_text:"Tani Capital é a solução perfeita.",test3_text:"Bot funciona bem.",cta_title:"Pronto para Começar?",cta_subtitle:"Registre-se para consultoria",form_title:"Consultoria Gratuita",form_name:"Nome completo *",form_name_ph:"Digite seu nome",form_email_ph:"Digite email",form_exp:"Experiência em trading",form_submit:"🚀 Registrar",form_note:"Confidencial. Resposta em 24h.",trial_badge:"🎁 Copie o bot na DBG",dbg_link:"🏦 Abrir conta DBG",disclaimer_title:"Aviso de Risco",disclaimer_p1:"Trading envolve alto risco.",disclaimer_li1:"Pode perder capital.",disclaimer_li2:"Passado não garante futuro.",disclaimer_li3:"Bot é uma ferramenta.",disclaimer_p2:"Registro = Aceitar riscos.",footer_desc:"Trading de ouro automático no MT5.",footer_links:"Links",footer_contact:"Contato",footer_dbg:"Abrir conta DBG",footer_copyright:"© 2024 Tani Capital."}};
-        const langInfo={vi:{flag:"🇻🇳",name:"VI"},en:{flag:"🇬🇧",name:"EN"},ru:{flag:"🇷🇺",name:"RU"},hi:{flag:"🇮🇳",name:"HI"},tr:{flag:"🇹🇷",name:"TR"},bn:{flag:"🇧🇩",name:"BN"},pt:{flag:"🇧🇷",name:"PT"}};
-        let currentLang=localStorage.getItem('lang')||'vi';
-        function toggleLangDropdown(){document.getElementById('langDropdown').classList.toggle('active');}
-        function changeLang(lang){currentLang=lang;localStorage.setItem('lang',lang);applyTranslations();document.getElementById('langDropdown').classList.remove('active');document.querySelector('.current-flag').textContent=langInfo[lang].flag;document.querySelector('.current-lang').textContent=langInfo[lang].name;document.querySelectorAll('.lang-option').forEach(opt=>opt.classList.remove('active'));document.querySelector(`.lang-option[onclick="changeLang('${lang}')"]`).classList.add('active');}
-        function applyTranslations(){const t=translations[currentLang];document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.getAttribute('data-i18n');if(t[key])el.innerHTML=t[key];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.getAttribute('data-i18n-placeholder');if(t[key])el.placeholder=t[key];});}
-        document.addEventListener('click',(e)=>{if(!e.target.closest('.lang-selector'))document.getElementById('langDropdown').classList.remove('active');});
-        document.addEventListener('DOMContentLoaded',()=>{changeLang(currentLang);});
-        document.querySelectorAll('a[href^="#"]').forEach(anchor=>{anchor.addEventListener('click',function(e){e.preventDefault();const target=document.querySelector(this.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'});});});
-        window.addEventListener('scroll',()=>{const header=document.querySelector('.header');header.style.boxShadow=window.scrollY>50?'0 4px 20px rgba(0,0,0,.1)':'none';});
-        document.getElementById('registerForm').addEventListener('submit',function(e){e.preventDefault();alert(currentLang==='vi'?'Cảm ơn bạn! Chúng tôi sẽ liên hệ trong 24h.':'Thank you! We will contact you within 24 hours.');this.reset();});
-        function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden';}
-        function closeLightbox(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow='auto';}
-        document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLightbox();});
-        document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
+        // Language dropdown toggle
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-selector')) {
+                document.getElementById('langDropdown').classList.remove('active');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Form submit
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ trong vòng 24h.');
+            this.reset();
+        });
+
+        // Lightbox
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
     </script>
 </body>
 </html>
