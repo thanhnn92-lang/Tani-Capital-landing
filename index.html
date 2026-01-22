@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tani Capital - Bot Trade Vàng Tự Động MT5</title>
+    <meta name="description" content="Tani Capital - Giải pháp giao dịch vàng XAU/USD tự động trên MT5. Lợi nhuận 6-8%/tháng, hỗ trợ 24/5.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="logo_tani.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,1492 +16,374 @@
             --primary-green: #2D6A4F;
             --dark-green: #1B4332;
             --accent-gold: #D4AF37;
-            --light-gold: #F5E6A3;
             --dark-charcoal: #333333;
             --light-gray: #F8F9FA;
             --white: #FFFFFF;
             --text-dark: #1A1A1A;
             --text-muted: #6B7280;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Source Sans 3', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-            background: var(--white);
-        }
-
-        /* Typography */
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(45, 106, 79, 0.1);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo img {
-            height: 45px;
-        }
-
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-green);
-        }
-
-        .header-cta {
-            background: var(--primary-green);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .header-cta:hover {
-            background: var(--dark-green);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E9 50%, #FFF8E1 100%);
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(45, 106, 79, 0.08) 0%, transparent 70%);
-            animation: pulse 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content {
-            animation: fadeInUp 1s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(45, 106, 79, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--primary-green);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--accent-gold);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.15;
-            color: var(--dark-charcoal);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 span {
-            color: var(--primary-green);
-            position: relative;
-        }
-
-        .hero h1 span::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 12px;
-            background: rgba(212, 175, 55, 0.3);
-            z-index: -1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 500px;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 2.5rem;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid rgba(45, 106, 79, 0.1);
-            border-bottom: 1px solid rgba(45, 106, 79, 0.1);
-        }
-
-        .stat-item {
-            text-align: left;
-        }
-
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            line-height: 1;
-        }
-
-        .stat-number span {
-            color: var(--accent-gold);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(45, 106, 79, 0.4);
-        }
-
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: transparent;
-            color: var(--primary-green);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--primary-green);
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .hero-visual {
-            position: relative;
-            animation: fadeInUp 1s ease 0.3s both;
-        }
-
-        .hero-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .trading-chart {
-            background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .chart-pair {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .gold-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--accent-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-        }
-
-        .chart-profit {
-            color: #4ADE80;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .chart-visual {
-            height: 120px;
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            padding-top: 1rem;
-        }
-
-        .chart-bar {
-            flex: 1;
-            background: linear-gradient(180deg, var(--accent-gold) 0%, var(--primary-green) 100%);
-            border-radius: 4px 4px 0 0;
-            animation: growBar 1.5s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes growBar {
-            from {
-                height: 0;
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .trade-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .trade-item {
-            background: var(--light-gray);
-            padding: 1rem;
-            border-radius: 10px;
-        }
-
-        .trade-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .trade-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--dark-charcoal);
-        }
-
-        .trade-value.profit {
-            color: #10B981;
-        }
-
-        .floating-badge {
-            position: absolute;
-            background: var(--white);
-            padding: 0.75rem 1rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .floating-badge.top-left {
-            top: -20px;
-            left: -30px;
-        }
-
-        .floating-badge.bottom-right {
-            bottom: -20px;
-            right: -30px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .badge-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .badge-icon.green {
-            background: rgba(45, 106, 79, 0.1);
-            color: var(--primary-green);
-        }
-
-        .badge-icon.gold {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--accent-gold);
-        }
-
-        /* Problems Section */
-        .problems {
-            padding: 6rem 2rem;
-            background: var(--white);
-        }
-
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-label {
-            display: inline-block;
-            background: rgba(45, 106, 79, 0.1);
-            color: var(--primary-green);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: 2.75rem;
-            color: var(--dark-charcoal);
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .problems-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .problem-card {
-            background: var(--light-gray);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .problem-card:hover {
-            border-color: var(--primary-green);
-            transform: translateY(-5px);
-        }
-
-        .problem-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(220, 38, 38, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.75rem;
-        }
-
-        .problem-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: var(--dark-charcoal);
-            margin-bottom: 0.75rem;
-        }
-
-        .problem-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Solution Section */
-        .solution {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, var(--dark-green) 0%, #0D2818 100%);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .solution::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .solution .section-container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .solution .section-label {
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--accent-gold);
-        }
-
-        .solution .section-title {
-            color: var(--white);
-        }
-
-        .solution .section-subtitle {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .solution-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-top: 3rem;
-        }
-
-        .solution-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--accent-gold);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            min-width: 48px;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .feature-content h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.125rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-content p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
-        }
-
-        .solution-visual {
-            position: relative;
-        }
-
-        .tech-stack {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .tech-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .tech-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-
-        .tech-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .tech-name {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .tech-desc {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Packages Section */
-        .packages {
-            padding: 6rem 2rem;
-            background: var(--light-gray);
-        }
-
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .package-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2.5rem;
-            position: relative;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .package-card:hover {
-            border-color: var(--primary-green);
-            box-shadow: 0 20px 40px rgba(45, 106, 79, 0.15);
-        }
-
-        .package-card.featured {
-            border-color: var(--accent-gold);
-        }
-
-        .package-badge {
-            position: absolute;
-            top: -12px;
-            right: 24px;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%);
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .package-header {
-            text-align: center;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--light-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .package-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--dark-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .package-profit {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
-        }
-
-        .package-profit span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .package-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-        }
-
-        .package-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .package-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .package-features li:last-child {
-            border-bottom: none;
-        }
-
-        .check-icon {
-            width: 20px;
-            height: 20px;
-            background: rgba(45, 106, 79, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-green);
-            font-size: 0.75rem;
-        }
-
-        .package-cta {
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .package-card:not(.featured) .package-cta {
-            background: var(--light-gray);
-            color: var(--primary-green);
-        }
-
-        .package-card:not(.featured) .package-cta:hover {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .package-card.featured .package-cta {
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            color: var(--white);
-        }
-
-        .package-card.featured .package-cta:hover {
-            box-shadow: 0 8px 20px rgba(45, 106, 79, 0.3);
-        }
-
-        .fee-note {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem 1.5rem;
-            background: rgba(45, 106, 79, 0.05);
-            border-radius: 10px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .fee-note strong {
-            color: var(--primary-green);
-        }
-
-        /* Process Section */
-        .process {
-            padding: 6rem 2rem;
-            background: var(--white);
-        }
-
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .process-step {
-            text-align: center;
-            position: relative;
-        }
-
-        .process-step::after {
-            content: '';
-            position: absolute;
-            top: 40px;
-            right: -50%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-green) 0%, transparent 100%);
-        }
-
-        .process-step:last-child::after {
-            display: none;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--white);
-            position: relative;
-            z-index: 1;
-        }
-
-        .step-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: var(--dark-charcoal);
-            margin-bottom: 0.5rem;
-        }
-
-        .step-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 6rem 2rem;
-            background: var(--light-gray);
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .testimonial-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .testimonial-quote {
-            font-size: 3rem;
-            color: var(--primary-green);
-            opacity: 0.2;
-            position: absolute;
-            top: 1rem;
-            left: 1.5rem;
-            font-family: serif;
-        }
-
-        .testimonial-text {
-            position: relative;
-            z-index: 1;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-gold) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 700;
-        }
-
-        .author-info {
-            flex: 1;
-        }
-
-        .author-name {
-            font-weight: 600;
-            color: var(--dark-charcoal);
-        }
-
-        .author-profit {
-            font-size: 0.875rem;
-            color: #10B981;
-            font-weight: 600;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, var(--dark-green) 0%, #0D2818 100%);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-        }
-
-        .cta-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-title {
-            font-size: 2.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-subtitle {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2.5rem;
-        }
-
-        .cta-form {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2.5rem;
-            text-align: left;
-        }
-
-        .form-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--dark-charcoal);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: var(--dark-charcoal);
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-green);
-        }
-
-        .form-select {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            background: var(--white);
-            cursor: pointer;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-            color: var(--white);
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 0.5rem;
-        }
-
-        .form-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(45, 106, 79, 0.3);
-        }
-
-        .form-note {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            margin-top: 1rem;
-        }
-
-        .trial-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(45, 106, 79, 0.1);
-            color: var(--primary-green);
-            padding: 0.75rem 1.25rem;
-            border-radius: 50px;
-            font-weight: 600;
-            margin-top: 1.5rem;
-        }
-
-        /* Disclaimer Section */
-        .disclaimer {
-            padding: 3rem 2rem;
-            background: #FEF3C7;
-            border-top: 3px solid var(--accent-gold);
-        }
-
-        .disclaimer-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .disclaimer-title {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: #92400E;
-            margin-bottom: 1rem;
-        }
-
-        .disclaimer-icon {
-            font-size: 1.5rem;
-        }
-
-        .disclaimer-text {
-            color: #78350F;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .disclaimer-text p {
-            margin-bottom: 0.75rem;
-        }
-
-        .disclaimer-text ul {
-            margin-left: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .disclaimer-text li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark-charcoal);
-            color: var(--white);
-            padding: 3rem 2rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .footer-logo img {
-            height: 40px;
-            filter: brightness(0) invert(1);
-        }
-
-        .footer-contact {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-item:hover {
-            color: var(--accent-gold);
-        }
-
-        .footer-copyright {
-            width: 100%;
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.875rem;
-        }
-
-        /* Responsive */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Source Sans 3', sans-serif; color: var(--text-dark); line-height: 1.6; background: var(--white); }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+        
+        .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 0; border-bottom: 1px solid rgba(45,106,79,0.1); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo img { height: 45px; }
+        .header-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .header-link { color: var(--text-dark); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .header-link:hover { color: var(--primary-green); }
+        .header-cta { background: var(--primary-green); color: var(--white); padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+        .header-cta:hover { background: var(--dark-green); transform: translateY(-2px); }
+        
+        .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E9 50%, #FFF8E1 100%); position: relative; overflow: hidden; padding-top: 80px; }
+        .hero-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+        .hero-content { animation: fadeInUp 1s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(45,106,79,0.1); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; color: var(--primary-green); margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.15; color: var(--dark-charcoal); margin-bottom: 1.5rem; }
+        .hero h1 span { color: var(--primary-green); }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
+        .hero-stats { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; padding: 1.5rem 0; border-top: 1px solid rgba(45,106,79,0.1); border-bottom: 1px solid rgba(45,106,79,0.1); }
+        .stat-item { text-align: left; }
+        .stat-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--primary-green); line-height: 1; }
+        .stat-number span { color: var(--accent-gold); }
+        .stat-label { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(45,106,79,0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(45,106,79,0.4); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--primary-green); padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid var(--primary-green); transition: all 0.3s ease; }
+        .btn-secondary:hover { background: var(--primary-green); color: var(--white); }
+        .btn-youtube { background: #FF0000; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
+        .btn-youtube:hover { background: #CC0000; transform: translateY(-2px); }
+        
+        .hero-visual { position: relative; animation: fadeInUp 1s ease 0.3s both; }
+        .hero-card { background: var(--white); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+        .trading-chart { background: linear-gradient(180deg, #1A1A2E 0%, #16213E 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .chart-pair { display: flex; align-items: center; gap: 0.5rem; color: var(--white); font-weight: 600; }
+        .gold-icon { width: 24px; height: 24px; background: var(--accent-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
+        .chart-profit { color: #4ADE80; font-weight: 700; font-size: 1.25rem; }
+        .chart-visual { height: 120px; display: flex; align-items: flex-end; gap: 4px; padding-top: 1rem; }
+        .chart-bar { flex: 1; background: linear-gradient(180deg, var(--accent-gold) 0%, var(--primary-green) 100%); border-radius: 4px 4px 0 0; }
+        .trade-info { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .trade-item { background: var(--light-gray); padding: 1rem; border-radius: 10px; }
+        .trade-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .trade-value { font-size: 1.25rem; font-weight: 700; color: var(--dark-charcoal); }
+        .trade-value.profit { color: #10B981; }
+        
+        .section-container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-label { display: inline-block; background: rgba(45,106,79,0.1); color: var(--primary-green); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
+        .section-title { font-size: 2.75rem; color: var(--dark-charcoal); margin-bottom: 1rem; }
+        .section-subtitle { font-size: 1.125rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        
+        .problems { padding: 6rem 2rem; background: var(--white); }
+        .problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .problem-card { background: var(--light-gray); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s ease; border: 2px solid transparent; }
+        .problem-card:hover { border-color: var(--primary-green); transform: translateY(-5px); }
+        .problem-icon { width: 64px; height: 64px; background: rgba(220,38,38,0.1); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.75rem; }
+        .problem-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark-charcoal); margin-bottom: 0.75rem; }
+        .problem-desc { color: var(--text-muted); font-size: 0.95rem; }
+        
+        .solution { padding: 6rem 2rem; background: linear-gradient(180deg, var(--dark-green) 0%, #0D2818 100%); color: var(--white); }
+        .solution .section-label { background: rgba(212,175,55,0.2); color: var(--accent-gold); }
+        .solution .section-title { color: var(--white); }
+        .solution .section-subtitle { color: rgba(255,255,255,0.7); }
+        .solution-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+        .solution-features { display: flex; flex-direction: column; gap: 1.5rem; }
+        .feature-item { display: flex; gap: 1rem; align-items: flex-start; background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
+        .feature-item:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-gold); }
+        .feature-icon { width: 48px; height: 48px; min-width: 48px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .feature-content h4 { font-family: 'Playfair Display', serif; font-size: 1.125rem; margin-bottom: 0.5rem; }
+        .feature-content p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+        .tech-stack { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .tech-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1.5rem; text-align: center; transition: all 0.3s ease; }
+        .tech-item:hover { background: rgba(255,255,255,0.1); transform: scale(1.05); }
+        .tech-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .tech-name { font-weight: 600; margin-bottom: 0.25rem; }
+        .tech-desc { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+        
+        .results { padding: 6rem 2rem; background: linear-gradient(135deg, #FFF8E1 0%, #F8F9FA 50%, #E8F5E9 100%); }
+        .results .section-label { background: rgba(212,175,55,0.2); color: #B8860B; }
+        .results-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+        .summary-card { background: var(--white); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid transparent; transition: all 0.3s ease; }
+        .summary-card:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
+        .summary-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; }
+        .summary-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--primary-green); margin-bottom: 0.25rem; }
+        .summary-label { font-size: 0.875rem; color: var(--text-muted); }
+        .results-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        .video-container { background: var(--white); border-radius: 20px; padding: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .video-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--light-gray); }
+        .video-icon { width: 40px; height: 40px; background: #FF0000; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; }
+        .video-title { font-family: 'Playfair Display', serif; font-size: 1.125rem; color: var(--dark-charcoal); }
+        .video-wrapper { position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; border-radius: 12px; max-height: 500px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
+        .youtube-channel { margin-top: 1rem; text-align: center; }
+        .gallery-container { display: flex; flex-direction: column; gap: 1.5rem; }
+        .gallery-header { display: flex; align-items: center; gap: 0.75rem; }
+        .gallery-icon { width: 40px; height: 40px; background: var(--primary-green); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; }
+        .gallery-title { font-family: 'Playfair Display', serif; font-size: 1.125rem; color: var(--dark-charcoal); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .gallery-item { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; }
+        .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+        .gallery-item img { width: 100%; height: auto; display: block; }
+        .gallery-item-info { padding: 1rem; background: var(--white); }
+        .gallery-item-title { font-weight: 600; color: var(--dark-charcoal); font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .gallery-item-profit { color: #10B981; font-weight: 700; font-size: 1.1rem; }
+        .results-note { margin-top: 2rem; padding: 1.25rem 1.5rem; background: rgba(45,106,79,0.1); border-radius: 12px; border-left: 4px solid var(--primary-green); }
+        .results-note p { color: var(--dark-charcoal); font-size: 0.95rem; }
+        .results-note strong { color: var(--primary-green); }
+        
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; padding: 2rem; }
+        .lightbox.active { display: flex; }
+        .lightbox-content { max-width: 90%; max-height: 90%; position: relative; }
+        .lightbox-content img { max-width: 100%; max-height: 85vh; border-radius: 12px; }
+        .lightbox-close { position: absolute; top: -40px; right: 0; background: var(--white); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; }
+        
+        .packages { padding: 6rem 2rem; background: var(--light-gray); }
+        .packages-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .package-card { background: var(--white); border-radius: 20px; padding: 2.5rem; position: relative; border: 2px solid transparent; transition: all 0.3s ease; }
+        .package-card:hover { border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(45,106,79,0.15); }
+        .package-card.featured { border-color: var(--accent-gold); }
+        .package-badge { position: absolute; top: -12px; right: 24px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); color: var(--white); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .package-header { text-align: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--light-gray); margin-bottom: 1.5rem; }
+        .package-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark-charcoal); margin-bottom: 0.5rem; }
+        .package-profit { font-size: 2.5rem; font-weight: 700; color: var(--primary-green); }
+        .package-profit span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .package-desc { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; }
+        .package-features { list-style: none; margin-bottom: 2rem; }
+        .package-features li { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--light-gray); }
+        .package-features li:last-child { border-bottom: none; }
+        .check-icon { width: 20px; height: 20px; background: rgba(45,106,79,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-green); font-size: 0.75rem; }
+        .package-cta { display: block; width: 100%; text-align: center; padding: 1rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+        .package-card:not(.featured) .package-cta { background: var(--light-gray); color: var(--primary-green); }
+        .package-card:not(.featured) .package-cta:hover { background: var(--primary-green); color: var(--white); }
+        .package-card.featured .package-cta { background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); }
+        .fee-note { text-align: center; margin-top: 2rem; padding: 1rem 1.5rem; background: rgba(45,106,79,0.05); border-radius: 10px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .fee-note strong { color: var(--primary-green); }
+        
+        .process { padding: 6rem 2rem; background: var(--white); }
+        .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3rem; }
+        .process-step { text-align: center; }
+        .step-number { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--white); }
+        .step-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark-charcoal); margin-bottom: 0.5rem; }
+        .step-desc { color: var(--text-muted); font-size: 0.95rem; }
+        
+        .testimonials { padding: 6rem 2rem; background: var(--light-gray); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+        .testimonial-card { background: var(--white); border-radius: 16px; padding: 2rem; position: relative; }
+        .testimonial-quote { font-size: 3rem; color: var(--primary-green); opacity: 0.2; position: absolute; top: 1rem; left: 1.5rem; }
+        .testimonial-text { position: relative; z-index: 1; color: var(--text-dark); margin-bottom: 1.5rem; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .author-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-gold) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 700; }
+        .author-name { font-weight: 600; color: var(--dark-charcoal); }
+        .author-profit { font-size: 0.875rem; color: #10B981; font-weight: 600; }
+        
+        .cta-section { padding: 6rem 2rem; background: linear-gradient(135deg, var(--dark-green) 0%, #0D2818 100%); color: var(--white); }
+        .cta-container { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+        .cta-title { font-size: 2.75rem; margin-bottom: 1rem; }
+        .cta-subtitle { font-size: 1.125rem; color: rgba(255,255,255,0.8); margin-bottom: 2.5rem; }
+        .cta-form { background: var(--white); border-radius: 16px; padding: 2.5rem; text-align: left; }
+        .form-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark-charcoal); text-align: center; margin-bottom: 1.5rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-label { display: block; font-weight: 600; color: var(--dark-charcoal); margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .form-input, .form-select { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; }
+        .form-input:focus { outline: none; border-color: var(--primary-green); }
+        .form-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 0.5rem; }
+        .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45,106,79,0.3); }
+        .form-note { text-align: center; color: var(--text-muted); font-size: 0.875rem; margin-top: 1rem; }
+        .trial-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(45,106,79,0.1); color: var(--primary-green); padding: 0.75rem 1.25rem; border-radius: 50px; font-weight: 600; margin-top: 1.5rem; }
+        .dbg-link { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); color: var(--white); padding: 0.75rem 1.25rem; border-radius: 50px; font-weight: 600; margin-top: 1rem; text-decoration: none; transition: all 0.3s; }
+        .dbg-link:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+        
+        .disclaimer { padding: 3rem 2rem; background: #FEF3C7; border-top: 3px solid var(--accent-gold); }
+        .disclaimer-container { max-width: 900px; margin: 0 auto; }
+        .disclaimer-title { display: flex; align-items: center; gap: 0.75rem; font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #92400E; margin-bottom: 1rem; }
+        .disclaimer-text { color: #78350F; font-size: 0.95rem; line-height: 1.8; }
+        .disclaimer-text p { margin-bottom: 0.75rem; }
+        .disclaimer-text ul { margin-left: 1.5rem; margin-bottom: 0.75rem; }
+        .disclaimer-text li { margin-bottom: 0.5rem; }
+        
+        .footer { background: var(--dark-charcoal); color: var(--white); padding: 3rem 2rem; }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-main { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+        .footer-logo { display: flex; align-items: center; gap: 0.75rem; }
+        .footer-logo img { height: 40px; filter: brightness(0) invert(1); }
+        .footer-links { display: flex; gap: 3rem; }
+        .footer-column h4 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1rem; }
+        .footer-column a { display: block; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.3s; }
+        .footer-column a:hover { color: var(--white); }
+        .footer-contact { display: flex; flex-direction: column; gap: 0.75rem; }
+        .contact-item { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s ease; }
+        .contact-item:hover { color: var(--accent-gold); }
+        .footer-copyright { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.875rem; }
+        
         @media (max-width: 1024px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero h1 {
-                font-size: 2.75rem;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .hero-cta {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                max-width: 500px;
-                margin: 0 auto;
-            }
-
-            .floating-badge {
-                display: none;
-            }
-
-            .problems-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .solution-content {
-                grid-template-columns: 1fr;
-            }
-
-            .packages-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .process-step::after {
-                display: none;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group {
-                grid-column: 1;
-            }
-
-            .footer-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-contact {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            .hero-container, .solution-content, .results-content { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.75rem; }
+            .hero-stats { justify-content: center; }
+            .hero-cta { justify-content: center; }
+            .problems-grid, .testimonials-grid { grid-template-columns: 1fr; }
+            .results-summary { grid-template-columns: repeat(2, 1fr); }
+            .packages-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+            .form-grid { grid-template-columns: 1fr; }
+            .footer-main { flex-direction: column; align-items: center; text-align: center; }
+            .footer-links { flex-direction: column; gap: 2rem; }
+            .header-nav { display: none; }
         }
-
         @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .cta-title {
-                font-size: 2rem;
-            }
-
-            .process-steps {
-                grid-template-columns: 1fr;
-            }
-
-            .header-cta {
-                display: none;
-            }
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .section-title, .cta-title { font-size: 2rem; }
+            .process-steps, .results-summary { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .header-cta { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
-            <div class="logo">
-                <img src="logo_tani.png" alt="Tani Capital Logo">
-            </div>
+            <div class="logo"><img src="logo_tani.png" alt="Tani Capital Logo"></div>
+            <nav class="header-nav">
+                <a href="#results" class="header-link">Kết Quả</a>
+                <a href="#packages" class="header-link">Gói Đầu Tư</a>
+                <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="header-link">📺 YouTube</a>
+            </nav>
             <a href="#register" class="header-cta">Đăng Ký Tư Vấn</a>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <span>Bot hoạt động 24/5 • Hơn 2 năm kiểm chứng</span>
-                </div>
+                <div class="hero-badge"><span>Bot hoạt động 24/5 • Hơn 2 năm kiểm chứng</span></div>
                 <h1>Đầu Tư Vàng Thông Minh Với <span>Bot Trade Tự Động</span></h1>
-                <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên MT5, giúp bạn tạo thu nhập thụ động ổn định mà không cần theo dõi thị trường.</p>
-                
+                <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên MT5, giúp bạn tạo thu nhập thụ động ổn định.</p>
                 <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">6-8<span>%</span></div>
-                        <div class="stat-label">Lợi nhuận trung bình/tháng</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">2<span>+</span></div>
-                        <div class="stat-label">Năm hoạt động ổn định</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24<span>/5</span></div>
-                        <div class="stat-label">Đội ngũ hỗ trợ trực tiếp</div>
-                    </div>
+                    <div class="stat-item"><div class="stat-number">6-8<span>%</span></div><div class="stat-label">Lợi nhuận TB/tháng</div></div>
+                    <div class="stat-item"><div class="stat-number">2<span>+</span></div><div class="stat-label">Năm hoạt động</div></div>
+                    <div class="stat-item"><div class="stat-number">24<span>/5</span></div><div class="stat-label">Hỗ trợ trực tiếp</div></div>
                 </div>
-
                 <div class="hero-cta">
-                    <a href="#register" class="btn-primary">
-                        Nhận Tư Vấn Miễn Phí
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="#packages" class="btn-secondary">
-                        Xem Gói Đầu Tư
-                    </a>
+                    <a href="#register" class="btn-primary">Nhận Tư Vấn Miễn Phí →</a>
+                    <a href="#results" class="btn-secondary">Xem Kết Quả Thực Tế</a>
                 </div>
             </div>
-
             <div class="hero-visual">
-                <div class="floating-badge top-left">
-                    <div class="badge-icon green">✓</div>
-                    <span>Giao dịch thành công</span>
-                </div>
-                
                 <div class="hero-card">
                     <div class="trading-chart">
                         <div class="chart-header">
-                            <div class="chart-pair">
-                                <div class="gold-icon">Au</div>
-                                XAU/USD
-                            </div>
+                            <div class="chart-pair"><div class="gold-icon">Au</div> XAU/USD</div>
                             <div class="chart-profit">+7.2%</div>
                         </div>
                         <div class="chart-visual">
-                            <div class="chart-bar" style="height: 40%; animation-delay: 0.1s;"></div>
-                            <div class="chart-bar" style="height: 55%; animation-delay: 0.2s;"></div>
-                            <div class="chart-bar" style="height: 45%; animation-delay: 0.3s;"></div>
-                            <div class="chart-bar" style="height: 70%; animation-delay: 0.4s;"></div>
-                            <div class="chart-bar" style="height: 60%; animation-delay: 0.5s;"></div>
-                            <div class="chart-bar" style="height: 85%; animation-delay: 0.6s;"></div>
-                            <div class="chart-bar" style="height: 75%; animation-delay: 0.7s;"></div>
-                            <div class="chart-bar" style="height: 90%; animation-delay: 0.8s;"></div>
-                            <div class="chart-bar" style="height: 80%; animation-delay: 0.9s;"></div>
-                            <div class="chart-bar" style="height: 95%; animation-delay: 1s;"></div>
+                            <div class="chart-bar" style="height:40%"></div>
+                            <div class="chart-bar" style="height:55%"></div>
+                            <div class="chart-bar" style="height:45%"></div>
+                            <div class="chart-bar" style="height:70%"></div>
+                            <div class="chart-bar" style="height:60%"></div>
+                            <div class="chart-bar" style="height:85%"></div>
+                            <div class="chart-bar" style="height:75%"></div>
+                            <div class="chart-bar" style="height:90%"></div>
+                            <div class="chart-bar" style="height:80%"></div>
+                            <div class="chart-bar" style="height:95%"></div>
                         </div>
                     </div>
                     <div class="trade-info">
-                        <div class="trade-item">
-                            <div class="trade-label">Tổng vốn</div>
-                            <div class="trade-value">$10,000</div>
-                        </div>
-                        <div class="trade-item">
-                            <div class="trade-label">Lợi nhuận tháng</div>
-                            <div class="trade-value profit">+$720</div>
-                        </div>
+                        <div class="trade-item"><div class="trade-label">Tổng vốn</div><div class="trade-value">$10,000</div></div>
+                        <div class="trade-item"><div class="trade-label">Lợi nhuận tháng</div><div class="trade-value profit">+$720</div></div>
                     </div>
-                </div>
-
-                <div class="floating-badge bottom-right">
-                    <div class="badge-icon gold">🏆</div>
-                    <span>Bot #1 XAU/USD</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Problems Section -->
     <section class="problems">
         <div class="section-container">
             <div class="section-header">
                 <span class="section-label">Thách Thức</span>
-                <h2 class="section-title">Bạn Đang Gặp Phải Những Vấn Đề Này?</h2>
-                <p class="section-subtitle">Hầu hết nhà đầu tư cá nhân đều phải đối mặt với những khó khăn khi tự giao dịch</p>
+                <h2 class="section-title">Bạn Đang Gặp Phải Vấn Đề Này?</h2>
+                <p class="section-subtitle">Hầu hết nhà đầu tư cá nhân đều đối mặt với những khó khăn khi tự giao dịch</p>
             </div>
-
             <div class="problems-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">⏰</div>
-                    <h3 class="problem-title">Không Có Thời Gian</h3>
-                    <p class="problem-desc">Công việc bận rộn, không thể ngồi theo dõi biểu đồ 24/7 để bắt điểm vào lệnh tốt nhất</p>
-                </div>
-
-                <div class="problem-card">
-                    <div class="problem-icon">📉</div>
-                    <h3 class="problem-title">Thua Lỗ Liên Tục</h3>
-                    <p class="problem-desc">Tự trade nhưng kết quả không như mong đợi, cảm xúc chi phối quyết định giao dịch</p>
-                </div>
-
-                <div class="problem-card">
-                    <div class="problem-icon">🎓</div>
-                    <h3 class="problem-title">Thiếu Kiến Thức</h3>
-                    <p class="problem-desc">Muốn đầu tư nhưng không biết bắt đầu từ đâu, sợ rủi ro khi chưa có kinh nghiệm</p>
-                </div>
+                <div class="problem-card"><div class="problem-icon">⏰</div><h3 class="problem-title">Không Có Thời Gian</h3><p class="problem-desc">Công việc bận rộn, không thể theo dõi biểu đồ 24/7</p></div>
+                <div class="problem-card"><div class="problem-icon">📉</div><h3 class="problem-title">Thua Lỗ Liên Tục</h3><p class="problem-desc">Tự trade nhưng cảm xúc chi phối quyết định</p></div>
+                <div class="problem-card"><div class="problem-icon">🎓</div><h3 class="problem-title">Thiếu Kiến Thức</h3><p class="problem-desc">Muốn đầu tư nhưng không biết bắt đầu từ đâu</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Solution Section -->
     <section class="solution">
         <div class="section-container">
             <div class="section-header">
                 <span class="section-label">Giải Pháp</span>
                 <h2 class="section-title">Tani Capital - Bot Trade Thông Minh</h2>
-                <p class="section-subtitle">Công nghệ AI kết hợp nhiều phương pháp phân tích chuyên sâu, giao dịch tự động 24/5</p>
+                <p class="section-subtitle">Công nghệ AI kết hợp nhiều phương pháp phân tích chuyên sâu</p>
             </div>
-
             <div class="solution-content">
                 <div class="solution-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">🤖</div>
-                        <div class="feature-content">
-                            <h4>Giao Dịch Hoàn Toàn Tự Động</h4>
-                            <p>Chỉ cần cài đặt một lần, bot sẽ tự động phân tích và thực hiện giao dịch. Bạn không cần can thiệp hay theo dõi thị trường.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">📊</div>
-                        <div class="feature-content">
-                            <h4>Chiến Lược SMC + AI</h4>
-                            <p>Kết hợp Smart Money Concept với chỉ báo OBV, RSI và AI phân tích thanh khoản, volume theo thời gian thực.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">🛡️</div>
-                        <div class="feature-content">
-                            <h4>Quản Lý Rủi Ro Chặt Chẽ</h4>
-                            <p>Drawdown tối đa 20-25%, rất hiếm xảy ra. Chỉ 2 lần trong suốt hơn 2 năm hoạt động.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">👥</div>
-                        <div class="feature-content">
-                            <h4>Hỗ Trợ 24/5</h4>
-                            <p>Đội ngũ kỹ thuật luôn trực để hỗ trợ bạn qua Telegram và Zalo. Giải đáp mọi thắc mắc nhanh chóng.</p>
-                        </div>
-                    </div>
+                    <div class="feature-item"><div class="feature-icon">🤖</div><div class="feature-content"><h4>Giao Dịch Hoàn Toàn Tự Động</h4><p>Chỉ cần cài đặt một lần, bot tự động phân tích và thực hiện giao dịch</p></div></div>
+                    <div class="feature-item"><div class="feature-icon">📊</div><div class="feature-content"><h4>Chiến Lược SMC + AI</h4><p>Kết hợp Smart Money Concept với OBV, RSI và AI phân tích thanh khoản</p></div></div>
+                    <div class="feature-item"><div class="feature-icon">🛡️</div><div class="feature-content"><h4>Quản Lý Rủi Ro Chặt Chẽ</h4><p>Drawdown tối đa 20-25%, chỉ 2 lần trong hơn 2 năm</p></div></div>
+                    <div class="feature-item"><div class="feature-icon">👥</div><div class="feature-content"><h4>Hỗ Trợ 24/5</h4><p>Đội ngũ kỹ thuật luôn trực qua Telegram và Zalo</p></div></div>
                 </div>
-
                 <div class="solution-visual">
                     <div class="tech-stack">
-                        <div class="tech-item">
-                            <div class="tech-icon">📈</div>
-                            <div class="tech-name">SMC</div>
-                            <div class="tech-desc">Smart Money Concept</div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon">🔄</div>
-                            <div class="tech-name">OBV</div>
-                            <div class="tech-desc">On-Balance Volume</div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon">⚡</div>
-                            <div class="tech-name">RSI</div>
-                            <div class="tech-desc">Relative Strength Index</div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon">🧠</div>
-                            <div class="tech-name">AI</div>
-                            <div class="tech-desc">Phân tích thanh khoản</div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon">⚙️</div>
-                            <div class="tech-name">MT5</div>
-                            <div class="tech-desc">MetaTrader 5</div>
-                        </div>
-                        <div class="tech-item">
-                            <div class="tech-icon">🏅</div>
-                            <div class="tech-name">Scalping</div>
-                            <div class="tech-desc">Chiến lược chính</div>
-                        </div>
+                        <div class="tech-item"><div class="tech-icon">📈</div><div class="tech-name">SMC</div><div class="tech-desc">Smart Money Concept</div></div>
+                        <div class="tech-item"><div class="tech-icon">🔄</div><div class="tech-name">OBV</div><div class="tech-desc">On-Balance Volume</div></div>
+                        <div class="tech-item"><div class="tech-icon">⚡</div><div class="tech-name">RSI</div><div class="tech-desc">Relative Strength Index</div></div>
+                        <div class="tech-item"><div class="tech-icon">🧠</div><div class="tech-name">AI</div><div class="tech-desc">Phân tích thanh khoản</div></div>
+                        <div class="tech-item"><div class="tech-icon">⚙️</div><div class="tech-name">MT5</div><div class="tech-desc">MetaTrader 5</div></div>
+                        <div class="tech-item"><div class="tech-icon">🏅</div><div class="tech-name">Scalping</div><div class="tech-desc">Chiến lược chính</div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Packages Section -->
+    <section class="results" id="results">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-label">📊 Kết Quả Thực Tế</span>
+                <h2 class="section-title">Minh Chứng Lợi Nhuận Tháng 1/2026</h2>
+                <p class="section-subtitle">Số liệu thực tế từ các tài khoản đang chạy bot (01/01 - 22/01/2026)</p>
+            </div>
+            <div class="results-summary">
+                <div class="summary-card"><div class="summary-icon">💰</div><div class="summary-value">$2,140+</div><div class="summary-label">Tổng lợi nhuận</div></div>
+                <div class="summary-card"><div class="summary-icon">📈</div><div class="summary-value">4</div><div class="summary-label">Tài khoản hoạt động</div></div>
+                <div class="summary-card"><div class="summary-icon">📅</div><div class="summary-value">22</div><div class="summary-label">Ngày giao dịch</div></div>
+                <div class="summary-card"><div class="summary-icon">🎯</div><div class="summary-value">XAU/USD</div><div class="summary-label">Sản phẩm giao dịch</div></div>
+            </div>
+            <div class="results-content">
+                <div class="video-container">
+                    <div class="video-header"><div class="video-icon">▶</div><div class="video-title">Video Lịch Sử Giao Dịch Tháng 1/2026</div></div>
+                    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nuY8CDPAcIk" title="Kết quả giao dịch Tani Capital" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+                    <div class="youtube-channel">
+                        <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="btn-youtube">▶ Xem thêm trên YouTube Channel</a>
+                    </div>
+                </div>
+                <div class="gallery-container">
+                    <div class="gallery-header"><div class="gallery-icon">📱</div><div class="gallery-title">Ảnh Chụp MT5 Statement</div></div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" onclick="openLightbox('Tk_4000.jpg')"><img src="Tk_4000.jpg" alt="TK $4,000"><div class="gallery-item-info"><div class="gallery-item-title">Tài khoản $4,000</div><div class="gallery-item-profit">+$231.42</div></div></div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000_1_.jpg')"><img src="Tk_5000_1_.jpg" alt="TK $5,000 (1)"><div class="gallery-item-info"><div class="gallery-item-title">Tài khoản $5,000 (1)</div><div class="gallery-item-profit">+$215.71</div></div></div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000__2_.jpg')"><img src="Tk_5000__2_.jpg" alt="TK $5,000 (2)"><div class="gallery-item-info"><div class="gallery-item-title">Tài khoản $5,000 (2)</div><div class="gallery-item-profit">+$861.55</div></div></div>
+                        <div class="gallery-item" onclick="openLightbox('Tk_5000__3_.jpg')"><img src="Tk_5000__3_.jpg" alt="TK $5,000 (3)"><div class="gallery-item-info"><div class="gallery-item-title">Tài khoản $5,000 (3)</div><div class="gallery-item-profit">+$831.43</div></div></div>
+                    </div>
+                    <div class="results-note"><p><strong>📌 Lưu ý:</strong> Đây là kết quả thực tế. Hiệu suất quá khứ không đảm bảo kết quả tương lai.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox"><div class="lightbox-content"><button class="lightbox-close" onclick="closeLightbox()">×</button><img src="" alt="MT5 Statement" id="lightbox-img"></div></div>
+
     <section class="packages" id="packages">
         <div class="section-container">
             <div class="section-header">
@@ -1505,7 +391,6 @@
                 <h2 class="section-title">Chọn Gói Phù Hợp Với Bạn</h2>
                 <p class="section-subtitle">Hai lựa chọn đầu tư phù hợp với mọi mục tiêu tài chính</p>
             </div>
-
             <div class="packages-grid">
                 <div class="package-card">
                     <div class="package-header">
@@ -1514,30 +399,14 @@
                         <p class="package-desc">Chiến lược an toàn, bảo toàn vốn</p>
                     </div>
                     <ul class="package-features">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Lợi nhuận ổn định 5-9%/tháng
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Ưu tiên bảo toàn vốn
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Phù hợp vốn lớn từ $5,000+
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Rủi ro thấp, drawdown nhỏ
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Hỗ trợ 24/5 qua Telegram, Zalo
-                        </li>
+                        <li><span class="check-icon">✓</span>Lợi nhuận ổn định 5-9%/tháng</li>
+                        <li><span class="check-icon">✓</span>Ưu tiên bảo toàn vốn</li>
+                        <li><span class="check-icon">✓</span>Phù hợp vốn lớn từ $5,000+</li>
+                        <li><span class="check-icon">✓</span>Rủi ro thấp, drawdown nhỏ</li>
+                        <li><span class="check-icon">✓</span>Hỗ trợ 24/5 qua Telegram, Zalo</li>
                     </ul>
                     <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
                 </div>
-
                 <div class="package-card featured">
                     <div class="package-badge">Phổ biến</div>
                     <div class="package-header">
@@ -1546,38 +415,19 @@
                         <p class="package-desc">Tối ưu lợi nhuận cao</p>
                     </div>
                     <ul class="package-features">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Lợi nhuận cao 50-100%/tháng
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Chiến lược tối ưu lợi nhuận
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Phù hợp vốn $500-$1,000
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Chấp nhận rủi ro cao hơn
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            Hỗ trợ 24/5 qua Telegram, Zalo
-                        </li>
+                        <li><span class="check-icon">✓</span>Lợi nhuận cao 50-100%/tháng</li>
+                        <li><span class="check-icon">✓</span>Chiến lược tối ưu lợi nhuận</li>
+                        <li><span class="check-icon">✓</span>Phù hợp vốn $500-$1,000</li>
+                        <li><span class="check-icon">✓</span>Chấp nhận rủi ro cao hơn</li>
+                        <li><span class="check-icon">✓</span>Hỗ trợ 24/5 qua Telegram, Zalo</li>
                     </ul>
                     <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
                 </div>
             </div>
-
-            <div class="fee-note">
-                <strong>💰 Chính sách phí:</strong> Bạn chỉ trả 30% lợi nhuận khi có lãi. Không lợi nhuận = Không phí.
-            </div>
+            <div class="fee-note"><strong>💰 Chính sách phí:</strong> Bạn chỉ trả 30% lợi nhuận khi có lãi. Không lợi nhuận = Không phí.</div>
         </div>
     </section>
 
-    <!-- Process Section -->
     <section class="process">
         <div class="section-container">
             <div class="section-header">
@@ -1585,235 +435,127 @@
                 <h2 class="section-title">Bắt Đầu Chỉ Với 4 Bước Đơn Giản</h2>
                 <p class="section-subtitle">Không cần kiến thức trading, đội ngũ sẽ hướng dẫn bạn từ A-Z</p>
             </div>
-
             <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Đăng Ký Tư Vấn</h3>
-                    <p class="step-desc">Để lại thông tin liên hệ, nhân viên sẽ gọi điện tư vấn chi tiết</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">Mở Tài Khoản</h3>
-                    <p class="step-desc">Được hướng dẫn tạo tài khoản trên sàn DBG và nạp vốn</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Cài Đặt Bot</h3>
-                    <p class="step-desc">Kỹ thuật viên hỗ trợ cài đặt bot vào tài khoản MT5 của bạn</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3 class="step-title">Nhận Lợi Nhuận</h3>
-                    <p class="step-desc">Bot tự động giao dịch 24/5, bạn chỉ cần theo dõi kết quả</p>
-                </div>
+                <div class="process-step"><div class="step-number">1</div><h3 class="step-title">Đăng Ký Tư Vấn</h3><p class="step-desc">Để lại thông tin, nhân viên sẽ gọi điện tư vấn</p></div>
+                <div class="process-step"><div class="step-number">2</div><h3 class="step-title">Mở Tài Khoản</h3><p class="step-desc">Được hướng dẫn tạo tài khoản trên sàn DBG</p></div>
+                <div class="process-step"><div class="step-number">3</div><h3 class="step-title">Cài Đặt Bot</h3><p class="step-desc">Kỹ thuật viên hỗ trợ cài bot vào MT5</p></div>
+                <div class="process-step"><div class="step-number">4</div><h3 class="step-title">Nhận Lợi Nhuận</h3><p class="step-desc">Bot tự động giao dịch 24/5</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="section-container">
             <div class="section-header">
                 <span class="section-label">Phản Hồi</span>
                 <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
-                <p class="section-subtitle">Hàng trăm nhà đầu tư đã tin tưởng và đạt kết quả tích cực với Tani Capital</p>
+                <p class="section-subtitle">Hàng trăm nhà đầu tư đã tin tưởng Tani Capital</p>
             </div>
-
             <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">Ban đầu tôi còn hoài nghi, nhưng sau 3 tháng chạy bot ổn định, tài khoản tăng đều đặn. Giờ tôi yên tâm để bot làm việc thay mình.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MH</div>
-                        <div class="author-info">
-                            <div class="author-name">Anh Minh Hoàng</div>
-                            <div class="author-profit">+24% sau 3 tháng</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">Không có thời gian học trading, Tani Capital là giải pháp hoàn hảo. Team hỗ trợ rất nhiệt tình, giải đáp mọi thắc mắc của tôi.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">TL</div>
-                        <div class="author-info">
-                            <div class="author-name">Chị Thu Lan</div>
-                            <div class="author-profit">+18% sau 2 tháng</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-quote">"</div>
-                    <p class="testimonial-text">Đã thử nhiều bot khác nhưng không ổn định. Tani Capital chạy mượt, lợi nhuận đều, quan trọng là có người trực 24/5.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">VD</div>
-                        <div class="author-info">
-                            <div class="author-name">Anh Văn Đức</div>
-                            <div class="author-profit">+32% sau 5 tháng</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text">Ban đầu tôi còn hoài nghi, nhưng sau 3 tháng chạy bot ổn định, tài khoản tăng đều đặn. Giờ tôi yên tâm để bot làm việc thay mình.</p><div class="testimonial-author"><div class="author-avatar">MH</div><div><div class="author-name">Anh Minh Hoàng</div><div class="author-profit">+24% sau 3 tháng</div></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text">Không có thời gian học trading, Tani Capital là giải pháp hoàn hảo. Team hỗ trợ rất nhiệt tình.</p><div class="testimonial-author"><div class="author-avatar">TL</div><div><div class="author-name">Chị Thu Lan</div><div class="author-profit">+18% sau 2 tháng</div></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-quote">"</div><p class="testimonial-text">Đã thử nhiều bot khác nhưng không ổn định. Tani Capital chạy mượt, lợi nhuận đều, có người trực 24/5.</p><div class="testimonial-author"><div class="author-avatar">VD</div><div><div class="author-name">Anh Văn Đức</div><div class="author-profit">+32% sau 5 tháng</div></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="cta-section" id="register">
         <div class="cta-container">
             <h2 class="cta-title">Sẵn Sàng Bắt Đầu Hành Trình Đầu Tư?</h2>
-            <p class="cta-subtitle">Đăng ký ngay để nhận tư vấn miễn phí và trải nghiệm bot 1-2 tuần trước khi quyết định</p>
-
+            <p class="cta-subtitle">Đăng ký ngay để nhận tư vấn miễn phí và bắt đầu hành trình đầu tư thông minh</p>
             <div class="cta-form">
                 <h3 class="form-title">Đăng Ký Nhận Tư Vấn Miễn Phí</h3>
-                <form action="#" method="POST">
+                <form action="#" method="POST" id="registerForm">
                     <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Họ và tên *</label>
-                            <input type="text" class="form-input" placeholder="Nhập họ và tên" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Số điện thoại *</label>
-                            <input type="tel" class="form-input" placeholder="Nhập số điện thoại" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-input" placeholder="Nhập email">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Telegram/Zalo</label>
-                            <input type="text" class="form-input" placeholder="Username Telegram hoặc Zalo">
-                        </div>
-                        <div class="form-group full-width">
-                            <label class="form-label">Kinh nghiệm trading</label>
-                            <select class="form-select">
-                                <option value="">-- Chọn mức độ kinh nghiệm --</option>
-                                <option value="none">Chưa có kinh nghiệm</option>
-                                <option value="beginner">Mới bắt đầu (dưới 1 năm)</option>
-                                <option value="intermediate">Có kinh nghiệm (1-3 năm)</option>
-                                <option value="advanced">Nhiều kinh nghiệm (trên 3 năm)</option>
-                            </select>
-                        </div>
-                        <div class="form-group full-width">
-                            <button type="submit" class="form-submit">
-                                🚀 Đăng Ký Nhận Tư Vấn Ngay
-                            </button>
-                        </div>
+                        <div class="form-group"><label class="form-label">Họ và tên *</label><input type="text" class="form-input" placeholder="Nhập họ và tên" required></div>
+                        <div class="form-group"><label class="form-label">Số điện thoại *</label><input type="tel" class="form-input" placeholder="Nhập số điện thoại" required></div>
+                        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="Nhập email"></div>
+                        <div class="form-group"><label class="form-label">Telegram/Zalo</label><input type="text" class="form-input" placeholder="Username Telegram hoặc Zalo"></div>
+                        <div class="form-group full-width"><label class="form-label">Kinh nghiệm trading</label><select class="form-select"><option value="">-- Chọn mức độ kinh nghiệm --</option><option value="none">Chưa có kinh nghiệm</option><option value="beginner">Mới bắt đầu (dưới 1 năm)</option><option value="intermediate">Có kinh nghiệm (1-3 năm)</option><option value="advanced">Nhiều kinh nghiệm (trên 3 năm)</option></select></div>
+                        <div class="form-group full-width"><button type="submit" class="form-submit">🚀 Đăng Ký Nhận Tư Vấn Ngay</button></div>
                     </div>
                 </form>
                 <p class="form-note">Thông tin của bạn được bảo mật 100%. Chúng tôi sẽ liên hệ trong vòng 24h.</p>
-                <div style="text-align: center;">
-                    <span class="trial-badge">
-                        🎁 Ưu đãi: Dùng thử bot 1-2 tuần MIỄN PHÍ
-                    </span>
+                <div style="text-align:center;">
+                    <span class="trial-badge">🎁 Dùng thử: Copy bot trực tiếp trên sàn DBG</span><br>
+                    <a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank" class="dbg-link">🏦 Mở tài khoản sàn DBG ngay</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Disclaimer Section -->
     <section class="disclaimer">
         <div class="disclaimer-container">
-            <h3 class="disclaimer-title">
-                <span class="disclaimer-icon">⚠️</span>
-                Cảnh Báo Rủi Ro Đầu Tư
-            </h3>
+            <h3 class="disclaimer-title"><span>⚠️</span> Cảnh Báo Rủi Ro Đầu Tư</h3>
             <div class="disclaimer-text">
-                <p><strong>Giao dịch ngoại hối (Forex) và các sản phẩm phái sinh như vàng (XAU/USD) tiềm ẩn mức độ rủi ro cao và có thể không phù hợp với tất cả nhà đầu tư.</strong></p>
-                <p>Trước khi quyết định giao dịch, bạn cần cân nhắc kỹ lưỡng các yếu tố sau:</p>
+                <p><strong>Giao dịch ngoại hối (Forex) và các sản phẩm phái sinh như vàng (XAU/USD) tiềm ẩn mức độ rủi ro cao.</strong></p>
                 <ul>
-                    <li>Bạn có thể mất một phần hoặc toàn bộ số vốn đầu tư ban đầu. Không nên đầu tư số tiền mà bạn không thể chấp nhận mất.</li>
-                    <li>Hiệu suất trong quá khứ không đảm bảo kết quả trong tương lai. Lợi nhuận 6-8%/tháng hay 50-100%/tháng là kết quả đã đạt được, không phải cam kết lợi nhuận cố định.</li>
-                    <li>Bot trading là công cụ hỗ trợ, không phải giải pháp "làm giàu nhanh chóng". Mọi giao dịch đều có rủi ro thua lỗ.</li>
-                    <li>Đòn bẩy trong giao dịch có thể khuếch đại cả lợi nhuận lẫn thua lỗ.</li>
+                    <li>Bạn có thể mất một phần hoặc toàn bộ vốn đầu tư. Không nên đầu tư số tiền mà bạn không thể chấp nhận mất.</li>
+                    <li>Hiệu suất trong quá khứ không đảm bảo kết quả trong tương lai.</li>
+                    <li>Bot trading là công cụ hỗ trợ, không phải giải pháp "làm giàu nhanh chóng".</li>
                 </ul>
-                <p>Bạn nên tìm kiếm tư vấn tài chính độc lập nếu chưa hiểu rõ các rủi ro liên quan. Tani Capital cung cấp công cụ và hỗ trợ kỹ thuật, không đưa ra lời khuyên đầu tư cá nhân.</p>
-                <p><strong>Bằng việc đăng ký sử dụng dịch vụ, bạn xác nhận đã đọc, hiểu và chấp nhận các rủi ro tiềm ẩn trong giao dịch tài chính.</strong></p>
+                <p><strong>Bằng việc đăng ký, bạn xác nhận đã đọc và chấp nhận các rủi ro trong giao dịch tài chính.</strong></p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-logo">
-                <img src="logo_tani.png" alt="Tani Capital">
-                <span style="font-family: 'Playfair Display', serif; font-size: 1.25rem;">Tani Capital</span>
+            <div class="footer-main">
+                <div>
+                    <div class="footer-logo"><img src="logo_tani.png" alt="Tani Capital"><span style="font-family:'Playfair Display',serif;font-size:1.25rem;">Tani Capital</span></div>
+                    <p style="color:rgba(255,255,255,0.6);margin-top:1rem;max-width:300px;">Giải pháp giao dịch vàng tự động trên MT5, giúp bạn tạo thu nhập thụ động ổn định.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Liên kết</h4>
+                        <a href="#results">Kết quả giao dịch</a>
+                        <a href="#packages">Gói đầu tư</a>
+                        <a href="#register">Đăng ký tư vấn</a>
+                        <a href="https://www.dbgvn.com/account/register?shareUserSetId=6e121c043c5242ad8" target="_blank">Mở tài khoản DBG</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Liên hệ</h4>
+                        <div class="footer-contact">
+                            <a href="https://t.me/michaelthanh789" class="contact-item" target="_blank">📱 Telegram: @michaelthanh789</a>
+                            <a href="https://zalo.me/0835312828" class="contact-item" target="_blank">💬 Zalo: 0835312828</a>
+                            <a href="https://www.youtube.com/@TaniCapital" class="contact-item" target="_blank">▶️ YouTube: @TaniCapital</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="footer-contact">
-                <a href="https://t.me/michaelthanh789" class="contact-item" target="_blank">
-                    <span>📱</span> Telegram: @michaelthanh789
-                </a>
-                <a href="https://zalo.me/0835312828" class="contact-item" target="_blank">
-                    <span>💬</span> Zalo: 0835312828
-                </a>
-            </div>
-
-            <div class="footer-copyright">
-                © 2024 Tani Capital. Tất cả quyền được bảo lưu. | Giao dịch tài chính có rủi ro, vui lòng cân nhắc kỹ trước khi đầu tư.
-            </div>
+            <div class="footer-copyright">© 2024 Tani Capital. Tất cả quyền được bảo lưu. | Giao dịch tài chính có rủi ro, vui lòng cân nhắc kỹ trước khi đầu tư.</div>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
-
-        // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.boxShadow = 'none';
-            }
+            header.style.boxShadow = window.scrollY > 50 ? '0 4px 20px rgba(0,0,0,0.1)' : 'none';
         });
-
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ trong vòng 24h.');
             this.reset();
         });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.problem-card, .feature-item, .package-card, .process-step, .testimonial-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
     </script>
 </body>
 </html>
