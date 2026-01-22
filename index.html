@@ -701,24 +701,28 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">Họ và tên *</label>
-                            <input type="text" class="form-input" placeholder="Nhập họ và tên" required>
+                            <input type="text" class="form-input" id="name" placeholder="Nhập họ và tên" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại *</label>
+                            <input type="tel" class="form-input" id="phone" placeholder="Nhập số điện thoại" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email *</label>
-                            <input type="email" class="form-input" placeholder="Nhập email" required>
+                            <input type="email" class="form-input" id="email" placeholder="Nhập email" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Telegram</label>
-                            <input type="text" class="form-input" placeholder="@username">
+                            <input type="text" class="form-input" id="telegram" placeholder="@username">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label class="form-label">Kinh nghiệm trading</label>
-                            <select class="form-select">
+                            <select class="form-select" id="experience">
                                 <option value="">-- Chọn mức độ --</option>
-                                <option value="none">Chưa có kinh nghiệm</option>
-                                <option value="beginner">Mới bắt đầu (dưới 1 năm)</option>
-                                <option value="intermediate">Có kinh nghiệm (1-3 năm)</option>
-                                <option value="advanced">Nhiều kinh nghiệm (3+ năm)</option>
+                                <option value="Chưa có kinh nghiệm">Chưa có kinh nghiệm</option>
+                                <option value="Mới bắt đầu (dưới 1 năm)">Mới bắt đầu (dưới 1 năm)</option>
+                                <option value="Có kinh nghiệm (1-3 năm)">Có kinh nghiệm (1-3 năm)</option>
+                                <option value="Nhiều kinh nghiệm (3+ năm)">Nhiều kinh nghiệm (3+ năm)</option>
                             </select>
                         </div>
                         <div class="form-group full-width">
@@ -824,11 +828,41 @@
             }
         });
 
-        // Form submit
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
+        // Form submit to Google Sheets
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ trong vòng 24h.');
-            this.reset();
+            
+            const submitBtn = this.querySelector('.form-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⏳ Đang gửi...';
+            submitBtn.disabled = true;
+
+            const data = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                telegram: document.getElementById('telegram').value,
+                experience: document.getElementById('experience').value
+            };
+
+            try {
+                await fetch('https://script.google.com/macros/s/AKfycbzBFh-QiGHCS0GR9COChpukCsWrYUNwnmcyVXsZZvZ-0R_rZvT0qbZ6o97sGmNQtiW7kw/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
+            } catch (error) {
+                alert('❌ Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Telegram: @michaelthanh789');
+            }
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         });
 
         // Lightbox
