@@ -27,15 +27,15 @@
         body { font-family: 'Source Sans 3', sans-serif; color: var(--text-dark); line-height: 1.6; background: var(--white); }
         h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
 
-        /* Google Translate */
-        #google_translate_element { display: inline-block; }
-        .goog-te-gadget { font-family: 'Source Sans 3', sans-serif !important; }
-        .goog-te-gadget-simple { background: rgba(45,106,79,.1) !important; border: none !important; padding: .5rem 1rem !important; border-radius: 8px !important; font-size: .9rem !important; }
-        .goog-te-gadget-simple .goog-te-menu-value span { color: var(--primary-green) !important; font-weight: 600 !important; }
-        .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .skiptranslate { display: none !important; }
-        .goog-te-gadget-icon { display: none !important; }
+        /* Language Selector */
+        .lang-selector { position: relative; }
+        .lang-btn { background: rgba(45,106,79,.1); border: none; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--primary-green); font-size: .9rem; }
+        .lang-btn:hover { background: rgba(45,106,79,.2); }
+        .lang-dropdown { position: absolute; top: 100%; right: 0; background: #fff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,.15); padding: .5rem; min-width: 160px; display: none; z-index: 1001; margin-top: .5rem; }
+        .lang-dropdown.active { display: block; }
+        .lang-option { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: 8px; cursor: pointer; transition: background .2s; font-size: .9rem; text-decoration: none; color: var(--text-dark); }
+        .lang-option:hover { background: var(--light-gray); }
+        .lang-option.active { background: rgba(45,106,79,.1); color: var(--primary-green); font-weight: 600; }
 
         /* Header */
         .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 0; border-bottom: 1px solid rgba(45,106,79,.1); }
@@ -307,7 +307,22 @@
                 <a href="#results" class="header-link">Kết Quả</a>
                 <a href="#packages" class="header-link">Gói Đầu Tư</a>
                 <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="header-link">📺 YouTube</a>
-                <div id="google_translate_element"></div>
+                <div class="lang-selector">
+                    <button class="lang-btn" onclick="toggleLangDropdown()">
+                        <span>🇻🇳</span>
+                        <span>VI</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <a href="index.html" class="lang-option active">🇻🇳 Tiếng Việt</a>
+                        <a href="en.html" class="lang-option">🇬🇧 English</a>
+                        <a href="ru.html" class="lang-option">🇷🇺 Русский</a>
+                        <a href="hi.html" class="lang-option">🇮🇳 हिन्दी</a>
+                        <a href="tr.html" class="lang-option">🇹🇷 Türkçe</a>
+                        <a href="bn.html" class="lang-option">🇧🇩 বাংলা</a>
+                        <a href="pt.html" class="lang-option">🇧🇷 Português</a>
+                    </div>
+                </div>
             </nav>
             <a href="#register" class="header-cta">Đăng Ký Tư Vấn</a>
         </div>
@@ -322,7 +337,7 @@
                 </div>
                 <div class="promo-banner">
                     <span class="promo-icon">🔥</span>
-                    <span>Chỉ với <strong>$500</strong> bạn có thể bắt đầu Copy Trade và hưởng lợi nhuận <strong>30-40%/tháng</strong></span>
+                    <span>Chỉ với <strong>$500</strong> bạn đã có thể bắt đầu Copy lệnh với chuyên gia và hưởng lợi nhuận <strong>30-40%/tháng</strong></span>
                 </div>
                 <h1>Đầu Tư Vàng Thông Minh Với <span>Bot Trade Tự Động</span></h1>
                 <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên nền tảng MT5. Không cần kinh nghiệm, không cần theo dõi - Bot làm việc cho bạn 24/5.</p>
@@ -899,8 +914,16 @@
     </footer>
 
     <script>
-        // Auto-detect language and redirect
-        (function() {
+        // Language dropdown toggle
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-selector')) {
+                document.getElementById('langDropdown').classList.remove('active');
+            }
+        });
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -940,8 +963,7 @@
             };
 
             try {
-                // Gửi data đến Google Sheets
-                fetch('https://script.google.com/macros/s/AKfycbzBFh-QiGHCS0GR9COChpukCsWrYUNwnmcyVXsZZvZ-0R_rZvT0qbZ6o97sGmNQtiW7kw/exec', {
+                await fetch('https://script.google.com/macros/s/AKfycbzBFh-QiGHCS0GR9COChpukCsWrYUNwnmcyVXsZZvZ-0R_rZvT0qbZ6o97sGmNQtiW7kw/exec', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
@@ -950,15 +972,14 @@
                     body: JSON.stringify(data)
                 });
                 
-                // Đợi 1 giây rồi redirect (đảm bảo data đã gửi)
-                setTimeout(function() {
-                    window.location.href = 'thank-you.html';
-                }, 1000);
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
             } catch (error) {
                 alert('❌ Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Telegram: @michaelthanh789');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
             }
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         });
 
         // Lightbox
@@ -977,17 +998,6 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeLightbox();
         });
-
-        // Google Translate
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'vi',
-                includedLanguages: 'vi,en,ru,hi,tr,bn,pt,zh-CN,ja,ko,th,id,ar,es,fr,de',
-                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
