@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cảm Ơn Bạn - Tani Capital</title>
+    <meta name="description" content="Cảm ơn bạn đã đăng ký tư vấn tại Tani Capital">
+    <link rel="icon" type="image/png" href="logo_tani.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2D6A4F;
+            --dark-green: #1B4332;
+            --accent-gold: #D4AF37;
+            --dark-charcoal: #333333;
+            --light-gray: #F8F9FA;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-muted: #6B7280;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Source Sans 3', sans-serif; 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E9 50%, #FFF8E1 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(45,106,79,.1);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            text-decoration: none;
+            color: var(--dark-charcoal);
+        }
+        .logo img { height: 45px; }
+        .logo span { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .thank-you-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,.1);
+        }
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
+            color: var(--white);
+            animation: scaleIn 0.5s ease-out;
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .thank-you-title {
+            font-size: 2.5rem;
+            color: var(--dark-charcoal);
+            margin-bottom: 1rem;
+        }
+        .thank-you-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .info-box {
+            background: var(--light-gray);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .info-box h3 {
+            font-size: 1.1rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+        .info-list {
+            list-style: none;
+        }
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: .75rem;
+            padding: .75rem 0;
+            border-bottom: 1px solid rgba(45,106,79,.1);
+        }
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        .info-list .step-num {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: var(--primary-green);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .9rem;
+        }
+        .info-list .step-text {
+            color: var(--text-dark);
+        }
+
+        /* Contact Box */
+        .contact-box {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+        }
+        .contact-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            color: var(--white);
+            text-decoration: none;
+            padding: .75rem 1rem;
+            background: rgba(255,255,255,.1);
+            border-radius: 10px;
+            transition: all .3s;
+        }
+        .contact-link:hover {
+            background: rgba(255,255,255,.2);
+            transform: translateX(5px);
+        }
+        .contact-link .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all .3s;
+            box-shadow: 0 4px 15px rgba(45,106,79,.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(45,106,79,.4);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: transparent;
+            color: var(--primary-green);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--primary-green);
+            transition: all .3s;
+        }
+        .btn-secondary:hover {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+        .btn-youtube {
+            background: #FF0000;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: all .3s;
+        }
+        .btn-youtube:hover {
+            background: #CC0000;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-charcoal);
+            color: rgba(255,255,255,.6);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: .875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .thank-you-card {
+                padding: 2rem 1.5rem;
+            }
+            .thank-you-title {
+                font-size: 2rem;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-primary, .btn-secondary, .btn-youtube {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="logo_tani.png" alt="Tani Capital Logo">
+                <span>Tani Capital</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="thank-you-card">
+            <div class="success-icon">✓</div>
+            <h1 class="thank-you-title">Cảm Ơn Bạn!</h1>
+            <p class="thank-you-subtitle">Đăng ký của bạn đã được ghi nhận thành công. Đội ngũ Tani Capital sẽ liên hệ với bạn trong vòng 24 giờ.</p>
+
+            <div class="info-box">
+                <h3>📋 Các bước tiếp theo</h3>
+                <ul class="info-list">
+                    <li>
+                        <span class="step-num">1</span>
+                        <span class="step-text">Chúng tôi sẽ gọi điện hoặc nhắn Telegram để tư vấn chi tiết</span>
+                    </li>
+                    <li>
+                        <span class="step-num">2</span>
+                        <span class="step-text">Hướng dẫn bạn mở tài khoản sàn DBG (nếu chưa có)</span>
+                    </li>
+                    <li>
+                        <span class="step-num">3</span>
+                        <span class="step-text">Cài đặt bot trading vào MT5 của bạn</span>
+                    </li>
+                    <li>
+                        <span class="step-num">4</span>
+                        <span class="step-text">Bot bắt đầu giao dịch tự động 24/5</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="contact-box">
+                <h3>💬 Liên hệ ngay nếu cần hỗ trợ</h3>
+                <div class="contact-links">
+                    <a href="https://t.me/michaelthanh789" target="_blank" class="contact-link">
+                        <span class="icon">📱</span>
+                        <span>Telegram: @michaelthanh789</span>
+                    </a>
+                    <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="contact-link">
+                        <span class="icon">▶️</span>
+                        <span>YouTube: @TaniCapital</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <a href="index.html" class="btn-secondary">← Quay lại trang chủ</a>
+                <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="btn-youtube">▶ Xem video kết quả</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2024 Tani Capital. Tất cả quyền được bảo lưu.
+    </footer>
+</body>
+</html>

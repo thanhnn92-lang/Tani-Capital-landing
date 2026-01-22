@@ -855,8 +855,8 @@
                     body: JSON.stringify(data)
                 });
                 
-                alert('🎉 Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ trong vòng 24h.');
-                this.reset();
+                // Redirect to thank you page
+                window.location.href = 'thank-you.html';
             } catch (error) {
                 alert('❌ Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ Telegram: @michaelthanh789');
             }
