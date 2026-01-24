@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tani Capital - Bot Trade Vàng Tự Động MT5</title>
-    <meta name="description" content="Tani Capital - Giải pháp giao dịch vàng XAU/USD tự động trên MT5. Lợi nhuận 5-9%/tháng.">
+    <meta name="description" content="Tani Capital - Giải pháp giao dịch vàng XAU/USD tự động trên MT5. Lợi nhuận 30-40%/tháng với Copy Trade từ chuyên gia.">
     <link rel="icon" type="image/png" href="logo_tani.png">
     <link rel="shortcut icon" type="image/png" href="logo_tani.png">
     <link rel="apple-touch-icon" href="logo_tani.png">
@@ -189,9 +189,11 @@
         /* Packages */
         .packages { padding: 6rem 2rem; background: var(--light-gray); }
         .packages-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .packages-single { max-width: 500px; margin: 0 auto; }
         .package-card { background: var(--white); border-radius: 20px; padding: 2.5rem; position: relative; border: 2px solid transparent; transition: all .3s; }
         .package-card:hover { border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(45,106,79,.15); }
         .package-card.featured { border-color: var(--accent-gold); }
+        .package-card.single-package { border-color: var(--accent-gold); box-shadow: 0 20px 60px rgba(212,175,55,.2); }
         .package-badge { position: absolute; top: -12px; right: 24px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); color: var(--white); padding: .5rem 1rem; border-radius: 50px; font-size: .75rem; font-weight: 700; text-transform: uppercase; }
         .package-header { text-align: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--light-gray); margin-bottom: 1.5rem; }
         .package-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark-charcoal); margin-bottom: .5rem; }
@@ -328,7 +330,7 @@
                 <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên nền tảng MT5. Không cần kinh nghiệm, không cần theo dõi - Bot làm việc cho bạn 24/5.</p>
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <div class="stat-number">6-8<span>%</span></div>
+                        <div class="stat-number">30-40<span>%</span></div>
                         <div class="stat-label">Lợi nhuận TB/tháng</div>
                     </div>
                     <div class="stat-item">
@@ -671,40 +673,28 @@
         <div class="section-container">
             <div class="section-header">
                 
-                <h2 class="section-title">Chọn Gói Phù Hợp Với Bạn</h2>
-                <p class="section-subtitle">Hai lựa chọn đầu tư phù hợp với mọi mục tiêu tài chính</p>
+                <h2 class="section-title">Gói Copy Trade Tăng Trưởng</h2>
+                <p class="section-subtitle">Chỉ với $500 - Bắt đầu hành trình tài chính cùng chuyên gia</p>
             </div>
-            <div class="packages-grid">
-                <div class="package-card">
-                    <div class="package-header">
-                        <h3 class="package-name">Bot Ổn Định</h3>
-                        <div class="package-profit">5-9%<span>/tháng</span></div>
-                        <p class="package-desc">Chiến lược an toàn, bảo toàn vốn</p>
-                    </div>
-                    <ul class="package-features">
-                        <li><span class="check-icon">✓</span> Lợi nhuận ổn định 5-9%/tháng</li>
-                        <li><span class="check-icon">✓</span> Ưu tiên bảo toàn vốn</li>
-                        <li><span class="check-icon">✓</span> Phù hợp vốn lớn từ $5,000+</li>
-                        <li><span class="check-icon">✓</span> Rủi ro thấp, drawdown nhỏ</li>
-                        <li><span class="check-icon">✓</span> Hỗ trợ 24/5 qua Telegram</li>
-                    </ul>
-                    <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
-                </div>
-                <div class="package-card featured">
-                    <div class="package-badge">Phổ biến</div>
+            <div class="packages-single">
+                <div class="package-card featured single-package">
+                    <div class="package-badge">🔥 Hot</div>
                     <div class="package-header">
                         <h3 class="package-name">Bot Tăng Trưởng</h3>
                         <div class="package-profit">30-40%<span>/tháng</span></div>
-                        <p class="package-desc">Tối ưu lợi nhuận cao</p>
+                        <p class="package-desc">Copy lệnh từ chuyên gia - Tối ưu lợi nhuận cao</p>
                     </div>
                     <ul class="package-features">
-                        <li><span class="check-icon">✓</span> Lợi nhuận cao 30-40%/tháng</li>
-                        <li><span class="check-icon">✓</span> Chiến lược tối ưu lợi nhuận</li>
-                        <li><span class="check-icon">✓</span> Phù hợp vốn $500-$1,000</li>
-                        <li><span class="check-icon">✓</span> Chấp nhận rủi ro cao hơn</li>
-                        <li><span class="check-icon">✓</span> Hỗ trợ 24/5 qua Telegram</li>
+                        <li><span class="check-icon">✓</span> Lợi nhuận cao <strong>30-40%/tháng</strong></li>
+                        <li><span class="check-icon">✓</span> Vốn tối thiểu chỉ <strong>$500</strong></li>
+                        <li><span class="check-icon">✓</span> Copy lệnh trực tiếp từ chuyên gia</li>
+                        <li><span class="check-icon">✓</span> Chuyên gia theo dõi 24/5</li>
+                        <li><span class="check-icon">✓</span> Không dùng chiến lược DCA rủi ro</li>
+                        <li><span class="check-icon">✓</span> Drawdown tối đa chỉ 20-25%</li>
+                        <li><span class="check-icon">✓</span> Hỗ trợ kỹ thuật qua Telegram</li>
+                        <li><span class="check-icon">✓</span> Miễn phí cài đặt & hướng dẫn</li>
                     </ul>
-                    <a href="#register" class="package-cta">Đăng Ký Tư Vấn</a>
+                    <a href="#register" class="package-cta">Đăng Ký Tư Vấn Ngay →</a>
                 </div>
             </div>
             <div class="fee-note">
