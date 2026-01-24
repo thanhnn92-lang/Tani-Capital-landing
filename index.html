@@ -27,15 +27,15 @@
         body { font-family: 'Source Sans 3', sans-serif; color: var(--text-dark); line-height: 1.6; background: var(--white); }
         h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
 
-        /* Language Selector */
-        .lang-selector { position: relative; }
-        .lang-btn { background: rgba(45,106,79,.1); border: none; padding: .5rem 1rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--primary-green); font-size: .9rem; }
-        .lang-btn:hover { background: rgba(45,106,79,.2); }
-        .lang-dropdown { position: absolute; top: 100%; right: 0; background: #fff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,.15); padding: .5rem; min-width: 160px; display: none; z-index: 1001; margin-top: .5rem; }
-        .lang-dropdown.active { display: block; }
-        .lang-option { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: 8px; cursor: pointer; transition: background .2s; font-size: .9rem; text-decoration: none; color: var(--text-dark); }
-        .lang-option:hover { background: var(--light-gray); }
-        .lang-option.active { background: rgba(45,106,79,.1); color: var(--primary-green); font-weight: 600; }
+        /* Google Translate */
+        #google_translate_element { display: inline-block; }
+        .goog-te-gadget { font-family: 'Source Sans 3', sans-serif !important; }
+        .goog-te-gadget-simple { background: rgba(45,106,79,.1) !important; border: none !important; padding: .5rem 1rem !important; border-radius: 8px !important; font-size: .9rem !important; }
+        .goog-te-gadget-simple .goog-te-menu-value span { color: var(--primary-green) !important; font-weight: 600 !important; }
+        .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .skiptranslate { display: none !important; }
+        .goog-te-gadget-icon { display: none !important; }
 
         /* Header */
         .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 0; border-bottom: 1px solid rgba(45,106,79,.1); }
@@ -51,7 +51,11 @@
         /* Hero */
         .hero { min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E9 50%, #FFF8E1 100%); position: relative; overflow: hidden; padding-top: 80px; }
         .hero-container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(45,106,79,.1); padding: .5rem 1rem; border-radius: 50px; font-size: .875rem; font-weight: 600; color: var(--primary-green); margin-bottom: 1.5rem; }
+        .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(45,106,79,.1); padding: .5rem 1rem; border-radius: 50px; font-size: .875rem; font-weight: 600; color: var(--primary-green); margin-bottom: 1rem; }
+        .promo-banner { display: inline-flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%); padding: .75rem 1.25rem; border-radius: 10px; font-size: 1rem; font-weight: 500; color: #fff; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(255,107,53,.3); animation: pulse 2s infinite; }
+        .promo-banner strong { font-weight: 700; }
+        .promo-icon { font-size: 1.25rem; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
         .hero h1 { font-size: 3.5rem; line-height: 1.15; color: var(--dark-charcoal); margin-bottom: 1.5rem; }
         .hero h1 span { color: var(--primary-green); }
         .hero-subtitle { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
@@ -119,6 +123,33 @@
         .tech-name { font-weight: 600; margin-bottom: .25rem; }
         .tech-desc { font-size: .8rem; color: rgba(255,255,255,.6); }
 
+        /* Myfxbook Section */
+        .myfxbook-section { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 24px; padding: 2.5rem; margin-bottom: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,.3); position: relative; overflow: hidden; }
+        .myfxbook-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #ff8f0a, #2d6a4f, #ff8f0a); }
+        .myfxbook-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,.1); flex-wrap: wrap; }
+        .myfxbook-badge { display: flex; align-items: center; gap: .5rem; background: linear-gradient(135deg, #ff8f0a 0%, #ff6b00 100%); padding: .5rem 1rem; border-radius: 50px; }
+        .myfxbook-badge img { height: 20px; }
+        .myfxbook-badge span { color: #fff; font-weight: 700; font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .myfxbook-header-content { flex: 1; }
+        .myfxbook-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: .25rem; }
+        .myfxbook-subtitle { font-size: .9rem; color: rgba(255,255,255,.6); }
+        .myfxbook-link { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.1); color: #fff; padding: .75rem 1.5rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all .3s; border: 1px solid rgba(255,255,255,.2); }
+        .myfxbook-link:hover { background: #ff8f0a; border-color: #ff8f0a; transform: translateY(-2px); }
+        .myfxbook-content { background: #fff; border-radius: 16px; padding: 1rem; margin-bottom: 1.5rem; }
+        .myfxbook-widget-container { min-height: 400px; }
+        .myfxbook-widget-container > div { width: 100% !important; }
+        .myfxbook-footer { }
+        .myfxbook-trust { display: flex; gap: 2rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: .5rem; color: rgba(255,255,255,.8); font-size: .9rem; }
+        .trust-icon { font-size: 1.1rem; }
+        .myfxbook-disclaimer { text-align: center; color: rgba(255,255,255,.6); font-size: .85rem; padding: 1rem; background: rgba(255,255,255,.05); border-radius: 10px; margin: 0; }
+        .myfxbook-disclaimer strong { color: #ff8f0a; }
+        @media (max-width: 768px) { 
+            .myfxbook-header { flex-direction: column; text-align: center; } 
+            .myfxbook-link { width: 100%; justify-content: center; }
+            .myfxbook-trust { flex-direction: column; gap: 1rem; align-items: center; }
+        }
+
         /* Results */
         .results { padding: 6rem 2rem; background: linear-gradient(135deg, #FFF8E1 0%, #F8F9FA 50%, #E8F5E9 100%); }
         .results .section-label { background: rgba(212,175,55,.2); color: #B8860B; }
@@ -149,6 +180,31 @@
         .gallery-item-profit { color: #10B981; font-weight: 700; font-size: 1.1rem; }
         .results-note { margin-top: 2rem; padding: 1.25rem 1.5rem; background: rgba(45,106,79,.1); border-radius: 12px; border-left: 4px solid var(--primary-green); }
         .results-note p { color: var(--dark-charcoal); font-size: .95rem; }
+
+        /* Profit Proof Table */
+        .profit-proof { margin-top: 4rem; background: var(--white); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 40px rgba(0,0,0,.1); }
+        .proof-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light-gray); }
+        .proof-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .proof-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--dark-charcoal); margin-bottom: .25rem; }
+        .proof-subtitle { font-size: .9rem; color: var(--text-muted); }
+        .proof-table-wrapper { overflow-x: auto; }
+        .proof-table { width: 100%; border-collapse: collapse; }
+        .proof-table th { background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: var(--white); padding: 1rem; text-align: left; font-weight: 600; }
+        .proof-table th:first-child { border-radius: 10px 0 0 0; }
+        .proof-table th:last-child { border-radius: 0 10px 0 0; text-align: right; }
+        .proof-table td { padding: 1rem; border-bottom: 1px solid var(--light-gray); }
+        .proof-table td:last-child { text-align: right; }
+        .proof-table tbody tr:hover { background: rgba(45,106,79,.05); }
+        .profit-positive { color: #10B981; font-weight: 700; font-size: 1.1rem; }
+        .proof-table tfoot td { background: var(--light-gray); font-weight: 700; }
+        .proof-table tfoot td:first-child { border-radius: 0 0 0 10px; }
+        .proof-table tfoot td:last-child { border-radius: 0 0 10px 0; }
+        .profit-total { color: var(--primary-green); font-size: 1.25rem; font-weight: 700; }
+        .proof-image { margin-top: 1.5rem; text-align: center; }
+        .proof-image img { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.15); cursor: pointer; transition: transform .3s; }
+        .proof-image img:hover { transform: scale(1.02); }
+        .proof-image-caption { margin-top: .75rem; font-size: .9rem; color: var(--text-muted); }
+        .proof-note { margin-top: 1rem; font-size: .85rem; color: var(--text-muted); font-style: italic; text-align: center; }
 
         /* Lightbox */
         .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.9); z-index: 2000; justify-content: center; align-items: center; padding: 2rem; }
@@ -278,22 +334,7 @@
                 <a href="#results" class="header-link">Kết Quả</a>
                 <a href="#packages" class="header-link">Gói Đầu Tư</a>
                 <a href="https://www.youtube.com/@TaniCapital" target="_blank" class="header-link">📺 YouTube</a>
-                <div class="lang-selector">
-                    <button class="lang-btn" onclick="toggleLangDropdown()">
-                        <span>🇻🇳</span>
-                        <span>VI</span>
-                        <span>▼</span>
-                    </button>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <a href="index.html" class="lang-option active">🇻🇳 Tiếng Việt</a>
-                        <a href="en.html" class="lang-option">🇬🇧 English</a>
-                        <a href="ru.html" class="lang-option">🇷🇺 Русский</a>
-                        <a href="hi.html" class="lang-option">🇮🇳 हिन्दी</a>
-                        <a href="tr.html" class="lang-option">🇹🇷 Türkçe</a>
-                        <a href="bn.html" class="lang-option">🇧🇩 বাংলা</a>
-                        <a href="pt.html" class="lang-option">🇧🇷 Português</a>
-                    </div>
-                </div>
+                <div id="google_translate_element"></div>
             </nav>
             <a href="#register" class="header-cta">Đăng Ký Tư Vấn</a>
         </div>
@@ -305,6 +346,10 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span>Bot hoạt động 24/5 • Hơn 2 năm kiểm chứng</span>
+                </div>
+                <div class="promo-banner">
+                    <span class="promo-icon">🔥</span>
+                    <span>Chỉ với <strong>$500</strong> bạn đã có thể bắt đầu Copy lệnh với chuyên gia và hưởng lợi nhuận <strong>30-40%/tháng</strong></span>
                 </div>
                 <h1>Đầu Tư Vàng Thông Minh Với <span>Bot Trade Tự Động</span></h1>
                 <p class="hero-subtitle">Tani Capital mang đến giải pháp giao dịch vàng (XAU/USD) hoàn toàn tự động trên nền tảng MT5. Không cần kinh nghiệm, không cần theo dõi - Bot làm việc cho bạn 24/5.</p>
@@ -369,7 +414,7 @@
     <section class="problems">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">Thách Thức</span>
+                
                 <h2 class="section-title">Bạn Đang Gặp Phải Vấn Đề Này?</h2>
                 <p class="section-subtitle">Hầu hết nhà đầu tư đều đối mặt với những khó khăn khi tự giao dịch</p>
             </div>
@@ -397,7 +442,7 @@
     <section class="solution">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">Giải Pháp</span>
+                
                 <h2 class="section-title">Tani Capital - Bot Trade Thông Minh</h2>
                 <p class="section-subtitle">Công nghệ AI kết hợp nhiều phương pháp phân tích chuyên sâu</p>
             </div>
@@ -406,22 +451,36 @@
                     <div class="feature-item">
                         <div class="feature-icon">🤖</div>
                         <div class="feature-content">
-                            <h4>Giao Dịch Hoàn Toàn Tự Động</h4>
-                            <p>Chỉ cần cài đặt một lần, bot tự động phân tích và thực hiện giao dịch 24/5</p>
+                            <h4>Bot + Chuyên Gia Theo Dõi 24/5</h4>
+                            <p>Bot hỗ trợ vào lệnh tự động, đội ngũ trader kinh nghiệm từ quỹ theo dõi liên tục. Nếu thị trường thuận lợi, chuyên gia có thể giữ lệnh để gia tăng lợi nhuận.</p>
                         </div>
                     </div>
                     <div class="feature-item">
                         <div class="feature-icon">📊</div>
                         <div class="feature-content">
                             <h4>Chiến Lược SMC + AI</h4>
-                            <p>Kết hợp Smart Money Concept với OBV, RSI và AI phân tích thanh khoản</p>
+                            <p>Kết hợp Smart Money Concept với OBV, RSI và AI phân tích thanh khoản. Vào lệnh dựa trên mô hình chỉ báo có tỷ lệ thắng cao.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📰</div>
+                        <div class="feature-content">
+                            <h4>Tránh Giao Dịch Khi Có Tin</h4>
+                            <p>Bot tự động dừng giao dịch khi thị trường ra tin quan trọng, tránh biến động mạnh gây thua lỗ không kiểm soát.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🚫</div>
+                        <div class="feature-content">
+                            <h4>Không Dùng Chiến Lược DCA</h4>
+                            <p>Không vào lệnh trung bình giá khi âm để chờ hồi. Chỉ vào lệnh khi có tín hiệu rõ ràng, đảm bảo không âm tài khoản quá 30%.</p>
                         </div>
                     </div>
                     <div class="feature-item">
                         <div class="feature-icon">🛡️</div>
                         <div class="feature-content">
                             <h4>Quản Lý Rủi Ro Chặt Chẽ</h4>
-                            <p>Drawdown tối đa 20-25%, chỉ xảy ra 2 lần trong hơn 2 năm hoạt động</p>
+                            <p>Drawdown tối đa 20-25%, chỉ xảy ra 2 lần trong hơn 2 năm. Bot giao dịch cho nhiều tài khoản quỹ nên luôn được giám sát chặt.</p>
                         </div>
                     </div>
                     <div class="feature-item">
@@ -474,10 +533,54 @@
     <section class="results" id="results">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">📊 Kết Quả Thực Tế</span>
-                <h2 class="section-title">Minh Chứng Lợi Nhuận Tháng 1/2026</h2>
-                <p class="section-subtitle">Số liệu thực tế từ các tài khoản đang chạy bot (01/01 - 22/01/2026)</p>
+                
+                <h2 class="section-title">Minh Chứng Lợi Nhuận Thực Tế</h2>
+                <p class="section-subtitle">Số liệu được xác minh từ Myfxbook - Cập nhật realtime 24/7</p>
             </div>
+
+            <!-- Myfxbook Live Widget -->
+            <div class="myfxbook-section">
+                <div class="myfxbook-header">
+                    <div class="myfxbook-badge">
+                        <img src="https://www.myfxbook.com/images/myfxbook-logo.png" alt="Myfxbook" onerror="this.style.display='none'">
+                        <span>VERIFIED ACCOUNT</span>
+                    </div>
+                    <div class="myfxbook-header-content">
+                        <h3 class="myfxbook-title">📊 Kết Quả Giao Dịch Live</h3>
+                        <p class="myfxbook-subtitle">Dữ liệu realtime từ tài khoản thật - Không thể chỉnh sửa</p>
+                    </div>
+                    <a href="https://www.myfxbook.com/portfolio/nguyen-ngoc-thanh/11897992" target="_blank" class="myfxbook-link">
+                        <span>Xem đầy đủ</span>
+                        <span>→</span>
+                    </a>
+                </div>
+                
+                <div class="myfxbook-content">
+                    <!-- Widget Browser chính thức -->
+                    <div class="myfxbook-widget-container">
+                        <script type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxBrowser.js?oid=11897992"></script>
+                    </div>
+                </div>
+
+                <div class="myfxbook-footer">
+                    <div class="myfxbook-trust">
+                        <div class="trust-item">
+                            <span class="trust-icon">✅</span>
+                            <span>Track Record Verified</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">🔒</span>
+                            <span>Dữ liệu từ Broker</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">⚡</span>
+                            <span>Cập nhật Realtime</span>
+                        </div>
+                    </div>
+                    <p class="myfxbook-disclaimer">💡 <strong>Myfxbook</strong> là nền tảng độc lập hàng đầu thế giới để xác minh kết quả giao dịch Forex. Dữ liệu được lấy trực tiếp từ broker, không ai có thể chỉnh sửa.</p>
+                </div>
+            </div>
+
             <div class="results-summary">
                 <div class="summary-card">
                     <div class="summary-icon">💰</div>
@@ -553,6 +656,76 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Bảng dẫn chứng lợi nhuận -->
+            <div class="profit-proof">
+                <div class="proof-header">
+                    <div class="proof-icon">📊</div>
+                    <div>
+                        <h3 class="proof-title">Lợi Nhuận Thực Tế Từ Người Dùng Copy Trade</h3>
+                        <p class="proof-subtitle">Dữ liệu từ sàn DBG Markets - Cập nhật 20/01/2026</p>
+                    </div>
+                </div>
+                <div class="proof-table-wrapper">
+                    <table class="proof-table">
+                        <thead>
+                            <tr>
+                                <th>Người theo dõi</th>
+                                <th>Thời gian đăng ký</th>
+                                <th>Lợi nhuận ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ngu***</td>
+                                <td>2026-01-20 08:53:35</td>
+                                <td class="profit-positive">+$558.30</td>
+                            </tr>
+                            <tr>
+                                <td>ngu***</td>
+                                <td>2026-01-20 08:54:18</td>
+                                <td class="profit-positive">+$557.80</td>
+                            </tr>
+                            <tr>
+                                <td>tan***</td>
+                                <td>2026-01-20 11:44:01</td>
+                                <td class="profit-positive">+$231.42</td>
+                            </tr>
+                            <tr>
+                                <td>ngo***</td>
+                                <td>2026-01-20 11:23:14</td>
+                                <td class="profit-positive">+$343.63</td>
+                            </tr>
+                            <tr>
+                                <td>ngo***</td>
+                                <td>2026-01-20 11:23:31</td>
+                                <td class="profit-positive">+$199.08</td>
+                            </tr>
+                            <tr>
+                                <td>ngo***</td>
+                                <td>2026-01-20 11:57:30</td>
+                                <td class="profit-positive">+$232.89</td>
+                            </tr>
+                            <tr>
+                                <td>ynh***</td>
+                                <td>2026-01-20 15:04:06</td>
+                                <td class="profit-positive">+$215.71</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Tổng lợi nhuận</strong></td>
+                                <td class="profit-total">+$2,338.83</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="proof-image">
+                    <img src="dbg_copy_trade.png" alt="DBG Markets Copy Trade Results" onclick="openLightbox('dbg_copy_trade.png')">
+                    <p class="proof-image-caption">📸 Ảnh chụp màn hình từ hệ thống Copy Trade sàn DBG Markets (Click để phóng to)</p>
+                </div>
+                <p class="proof-note">* Dữ liệu được trích xuất trực tiếp từ hệ thống Copy Trade của sàn DBG Markets</p>
+            </div>
         </div>
     </section>
 
@@ -568,7 +741,7 @@
     <section class="packages" id="packages">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">Gói Đầu Tư</span>
+                
                 <h2 class="section-title">Chọn Gói Phù Hợp Với Bạn</h2>
                 <p class="section-subtitle">Hai lựa chọn đầu tư phù hợp với mọi mục tiêu tài chính</p>
             </div>
@@ -615,7 +788,7 @@
     <section class="process">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">Quy Trình</span>
+                
                 <h2 class="section-title">Bắt Đầu Chỉ Với 4 Bước Đơn Giản</h2>
                 <p class="section-subtitle">Không cần kiến thức trading, đội ngũ sẽ hướng dẫn bạn từ A-Z</p>
             </div>
@@ -648,7 +821,7 @@
     <section class="testimonials">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">Phản Hồi</span>
+                
                 <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
                 <p class="section-subtitle">Hàng trăm nhà đầu tư đã tin tưởng sử dụng Tani Capital</p>
             </div>
@@ -797,16 +970,6 @@
     </footer>
 
     <script>
-        // Language dropdown toggle
-        function toggleLangDropdown() {
-            document.getElementById('langDropdown').classList.toggle('active');
-        }
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.lang-selector')) {
-                document.getElementById('langDropdown').classList.remove('active');
-            }
-        });
-
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -881,6 +1044,17 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeLightbox();
         });
+
+        // Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi',
+                includedLanguages: 'vi,en,ru,hi,tr,bn,pt,zh-CN,ja,ko,th,id,ar,es,fr,de',
+                layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
     </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
