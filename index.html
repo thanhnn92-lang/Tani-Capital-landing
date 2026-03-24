@@ -94,22 +94,6 @@
     transform: scale(1.03);
     box-shadow: 0 0 0 3px rgba(245,200,66,0.4), 0 0 60px rgba(245,200,66,0.35);
   }
-    width: 88px; height: 88px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold) 0%, #D4A017 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--dark);
-    letter-spacing: 1px;
-    box-shadow: 0 0 0 4px rgba(245,200,66,0.15), 0 0 40px rgba(245,200,66,0.3);
-    animation: glow 3s ease-in-out infinite alternate;
-    margin-bottom: 20px;
-  }
-  @keyframes glow {
-    from { box-shadow: 0 0 0 4px rgba(245,200,66,0.15), 0 0 30px rgba(245,200,66,0.25); }
-    to   { box-shadow: 0 0 0 4px rgba(245,200,66,0.3),  0 0 60px rgba(245,200,66,0.45); }
-  }
 
   .name {
     font-family: 'Bebas Neue', sans-serif;
@@ -227,6 +211,39 @@
     transform: translateY(-2px);
   }
 
+  /* Card – Zalo */
+  .card-zalo {
+    background: linear-gradient(135deg, #001533 0%, #002050 60%, #001533 100%);
+    border: 1px solid rgba(0,130,255,0.35);
+    box-shadow: 0 4px 24px rgba(0,130,255,0.08);
+  }
+  .card-zalo::before {
+    background: linear-gradient(135deg, rgba(0,130,255,0.07), transparent);
+  }
+  .card-zalo:hover {
+    box-shadow: 0 8px 40px rgba(0,130,255,0.2);
+    transform: translateY(-2px);
+  }
+  .card-zalo .card-title { color: #4DA6FF; }
+
+  /* Card – Telegram */
+  .card-telegram {
+    background: linear-gradient(135deg, #001020 0%, #00182e 60%, #001020 100%);
+    border: 1px solid rgba(41,182,246,0.35);
+    box-shadow: 0 4px 24px rgba(41,182,246,0.08);
+  }
+  .card-telegram::before {
+    background: linear-gradient(135deg, rgba(41,182,246,0.07), transparent);
+  }
+  .card-telegram:hover {
+    box-shadow: 0 8px 40px rgba(41,182,246,0.2);
+    transform: translateY(-2px);
+  }
+  .card-telegram .card-title { color: #29B6F6; }
+
+  .icon-blue { background: rgba(0,130,255,0.1); border: 1px solid rgba(0,130,255,0.2); }
+  .icon-tele { background: rgba(41,182,246,0.1); border: 1px solid rgba(41,182,246,0.2); }
+
   .card-icon {
     width: 48px; height: 48px;
     border-radius: 12px;
@@ -285,6 +302,27 @@
     100% { opacity: 0; transform: scale(2); }
   }
 
+  /* Section label */
+  .section-label {
+    width: 100%;
+    font-size: 10px;
+    color: rgba(240,237,230,0.3);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(240,237,230,0.1);
+  }
+
   /* Footer */
   .footer {
     margin-top: 40px;
@@ -326,14 +364,15 @@
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .banner-link    { animation: fadeUp 0.5s ease 0.1s both; }
-  .name        { animation: fadeUp 0.5s ease 0.2s both; }
-  .tagline     { animation: fadeUp 0.5s ease 0.3s both; }
-  .divider     { animation: fadeUp 0.5s ease 0.35s both; }
-  .ticker-wrap { animation: fadeUp 0.5s ease 0.4s both; }
-  .stats       { animation: fadeUp 0.5s ease 0.45s both; }
-  .cards       { animation: fadeUp 0.5s ease 0.55s both; }
-  .footer      { animation: fadeUp 0.5s ease 0.7s both; }
+  .banner-link      { animation: fadeUp 0.5s ease 0.1s both; }
+  .name             { animation: fadeUp 0.5s ease 0.2s both; }
+  .tagline          { animation: fadeUp 0.5s ease 0.3s both; }
+  .divider          { animation: fadeUp 0.5s ease 0.35s both; }
+  .ticker-wrap      { animation: fadeUp 0.5s ease 0.4s both; }
+  .stats            { animation: fadeUp 0.5s ease 0.45s both; }
+  .cards            { animation: fadeUp 0.5s ease 0.55s both; }
+  .contact-section  { animation: fadeUp 0.5s ease 0.65s both; }
+  .footer           { animation: fadeUp 0.5s ease 0.75s both; }
 </style>
 </head>
 <body>
@@ -407,6 +446,32 @@
       <div class="card-arrow">→</div>
     </a>
 
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section" style="width:100%;">
+    <div class="section-label">Liên hệ hỗ trợ</div>
+    <div class="cards">
+
+      <a class="card card-zalo" href="https://zalo.me/0865189028" target="_blank" rel="noopener">
+        <div class="card-icon icon-blue">💬</div>
+        <div class="card-text">
+          <div class="card-title">Zalo Hỗ Trợ</div>
+          <div class="card-desc">Nhắn tin trực tiếp qua Zalo · 0865 189 028</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+      <a class="card card-telegram" href="https://t.me/Tanicapital_support" target="_blank" rel="noopener">
+        <div class="card-icon icon-tele">✈️</div>
+        <div class="card-text">
+          <div class="card-title">Telegram Support</div>
+          <div class="card-desc">Chat với chúng tôi trên Telegram · @Tanicapital_support</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+
+    </div>
   </div>
 
   <div class="footer">© RoboForex · Giao dịch có rủi ro · Đầu tư có trách nhiệm</div>
